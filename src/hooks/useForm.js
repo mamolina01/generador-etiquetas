@@ -1,57 +1,27 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useState } from "react";
 
-export const useForm = ( initialForm = {},formValidations={} ) => {
-  
-    const [ formState, setFormState ] = useState( initialForm );
-    const [formValidation, setFormValidation] = useState({})
+export const useForm = (initialValue = {}) => {
+  const [formState, setFormState] = useState(initialValue);
 
-    useEffect(() => {
-        createValidators()
-    }, [formState])
+  const onInputChange = ({ target }) => {
+    const { name, value } = target;
 
-    useEffect(()=>{
-        setFormState(initialForm)
-    },[initialForm])
+    setFormState({
+      ...formState,
+      [name]: value,
+    });
+  };
 
-    const isFormValid=useMemo(()=>{
-        for (const formValue of Object.keys(formValidation)) {
-            if(formValidation[formValue]!=="") return false
-        }
-        return true
-    },[formValidation])
+  const resetForm = () => {
+    setFormState(initialValue);
+  };
 
-    const onInputChange = ({ target }) => {
-        const { name, value } = target;
-        setFormState({
-            ...formState,
-            [ name ]: value
-        });
+  const isFormValid = () => {
+    for (const formValue of Object.keys(formState)) {
+      if (formState[formValue] === "") return false;
     }
+    return true;
+  };
 
-    const onResetForm = () => {
-        setFormState( initialForm );
-    }
-
-    const createValidators=()=>{
-
-        const formCheckedValues={}
-
-        for (const formField of Object.keys(formValidations)){
-            const [fn,errorMessage='Este campo es requerido']=formValidations[formField]
-
-            formCheckedValues[`${formField}Valid`] =fn( formState[formField] ) ?null:errorMessage
-        }
-
-        setFormValidation(formCheckedValues)
-    }
-
-    return {
-        // ...formState,
-        formState,
-        onInputChange,
-        onResetForm,
-
-        ...formValidation,
-        isFormValid
-    }
-}
+  return { formState, isFormValid, onInputChange, resetForm };
+};
