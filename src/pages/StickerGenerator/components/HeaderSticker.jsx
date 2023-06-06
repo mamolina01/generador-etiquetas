@@ -1,6 +1,6 @@
 import React from "react";
 
-export const HeaderEtiqueta = ({ imagen, instagram, whatsapp }) => {
+export const HeaderSticker = ({ imagen, instagram, whatsapp }) => {
   return (
     <div className="grid grid-cols-3 ">
       <div className="grid col-span-2">

@@ -18,7 +18,9 @@ export const useForm = (initialValue = {}) => {
 
   const isFormValid = () => {
     for (const formValue of Object.keys(formState)) {
-      if (formState[formValue] === "") return false;
+      if (formValue !== "observaciones") {
+        if (formState[formValue] === "") return false;
+      }
     }
     return true;
   };

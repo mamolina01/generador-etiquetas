@@ -1,10 +1,14 @@
-import { isFormValid } from "../helpers/isFormValid";
-import { useForm } from "../hooks/useForm";
-import { HeaderEtiqueta } from "./HeaderEtiqueta";
-// import { PDFconverter } from "../helpers";
+import { useContext, useState } from "react";
+import { useForm } from "../../../hooks";
+import { HeaderSticker } from "./HeaderSticker";
 import { Preview, print } from "react-html2pdf";
+import { StickerContext } from "../../../context";
+import { jsPDF } from "jspdf";
 
-export const FormEtiqueta = () => {
+export const FormSticker = () => {
+  const { addSticker } = useContext(StickerContext);
+
+  const [error, setError] = useState(false);
   const { formState, isFormValid, onInputChange, resetForm } = useForm({
     nombre: "",
     direccion: "",
@@ -18,22 +22,43 @@ export const FormEtiqueta = () => {
     const validation = isFormValid();
     if (!validation) {
       console.log("Completa todos los campos");
+      setError(true);
       return;
     }
-
+    setError(false);
     console.log("Todos los campos completos!");
-    print("a", "pdf");
-    resetForm();
+    // print("Etiqueta", "pdf");
+    // doc.text("Hello world!", 10, 10);
+    const doc = new jsPDF();
+
+    doc.html(document.getElementById("pdf"), {
+      callback: function (doc) {
+        doc.save("a4.pdf");
+      },
+      // width: 50,
+      format:"a4"
+      // x: 10,
+      // y: 10
+    });
+    // doc.save("a4.pdf");
+    // addSticker(formState)
+    // resetForm();
   };
   return (
     <>
-      <div className="bg-white shadow-md shadow-stone-600 rounded-lg p-5">
-        <div className="flex flex-col gap-2" id="pdf">
-          <HeaderEtiqueta
+      <div className="bg-white shadow-md shadow-stone-400 rounded-lg  my-5">
+        <div className="flex flex-col gap-2 p-5" id="pdf">
+          <HeaderSticker
             imagen={"naranja.png"}
             instagram={"eravirtual_"}
             whatsapp={"1124428371"}
           />
+          {error && (
+            <p className="w-full text-center bg-red-500 text-white font-bold p-2 mt-2">
+              COMPLETA TODOS LOS CAMPOS
+            </p>
+          )}
+
           <label
             htmlFor="nombre"
             className="block text-zinc-700 uppercase font-bold"

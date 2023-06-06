@@ -1,9 +1,11 @@
-import { Etiqueta } from "./components/Etiqueta";
+import { MyRoutes } from "./router/MyRoutes";
 
 function App() {
-  return <>
-    <Etiqueta/>
-  </>;
+  return (
+    <>
+      <MyRoutes/>
+    </>
+  );
 }
 
 export default App;
