@@ -23,7 +23,7 @@ export const StickerCard = ({
 
   useEffect(() => {
     const finded = toPrint.find((item) => item.id === sticker.id);
-    setChecked(finded);
+    setChecked(!!finded);
   }, [toPrint]);
 
   return (

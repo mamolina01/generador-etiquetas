@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import { StickerContext } from "../../context";
 import { StickerCard } from "./components/StickerCard";
 import { generateID } from "../../helpers/generateID";
+import { generatePDF } from "./helpers/generatePDF";
 
 export const StickerList = () => {
   const { stickers } = useContext(StickerContext);
@@ -28,6 +29,14 @@ export const StickerList = () => {
       setToPrint([]);
     }
   };
+
+  const handleImprimir = () => {
+    // toPrint.map((item)=>(
+    //   console.log(`Imprimiendoo ${item.nombre}`)
+    // ))
+
+    generatePDF(toPrint);
+  };
   return (
     <>
       <div className=" w-full h-screen overflow-auto scroll-auto">
@@ -42,7 +51,10 @@ export const StickerList = () => {
               <p>Seleccionar Todos</p>
             </div>
 
-            <button className=" bg-indigo-600 text-white p-1 rounded-sm font-semibold hover:bg-indigo-700">
+            <button
+              className=" bg-indigo-600 text-white p-1 rounded-sm font-semibold hover:bg-indigo-700"
+              onClick={() => handleImprimir()}
+            >
               Imprimir
             </button>
           </div>

@@ -1,9 +1,8 @@
 import { useContext, useState } from "react";
 import { useForm } from "../../../hooks";
 import { HeaderSticker } from "./HeaderSticker";
-import { Preview, print } from "react-html2pdf";
 import { StickerContext } from "../../../context";
-import { jsPDF } from "jspdf";
+// import { generatePDFhtml2canvas } from "../helpers/generatePDF";
 
 export const FormSticker = () => {
   const { addSticker } = useContext(StickerContext);
@@ -27,22 +26,11 @@ export const FormSticker = () => {
     }
     setError(false);
     console.log("Todos los campos completos!");
-    // print("Etiqueta", "pdf");
-    // doc.text("Hello world!", 10, 10);
-    const doc = new jsPDF();
 
-    doc.html(document.getElementById("pdf"), {
-      callback: function (doc) {
-        doc.save("a4.pdf");
-      },
-      // width: 50,
-      format:"a4"
-      // x: 10,
-      // y: 10
-    });
-    // doc.save("a4.pdf");
-    // addSticker(formState)
-    // resetForm();
+    // generatePDFhtml2canvas(document.getElementById("pdf"));
+
+    addSticker(formState)
+    resetForm();
   };
   return (
     <>
@@ -72,8 +60,14 @@ export const FormSticker = () => {
             placeholder="Nombre del destinatario"
             value={formState.nombre}
             onChange={(e) => onInputChange(e)}
-            className="border-b-2 border-zinc-700 w-full p-2 placeholder-grey-400 text-sm outline-none"
+            className="border-b-2 border-zinc-700 w-full py-2 placeholder-grey-400 text-sm outline-none"
+            // className="bg-red-500 py-5"
+            // className="hidden"
           />
+          {/* <p className="border-b-2 border-zinc-700 w-full placeholder-grey-400 py-2 text-md outline-none"
+          >
+            {formState.nombre}
+          </p> */}
 
           <label
             htmlFor="direccion"
@@ -88,8 +82,14 @@ export const FormSticker = () => {
             placeholder="Dirección del destinatario"
             value={formState.direccion}
             onChange={(e) => onInputChange(e)}
-            className="border-b-2 border-zinc-700 w-full p-2  placeholder-grey-400 text-sm outline-none"
+            className="border-b-2 border-zinc-700 w-full py-2 placeholder-grey-400 text-sm outline-none"
+            // className="bg-red-500  py-5"
+            // className="hidden"
           />
+          {/* <p className="border-b-2 border-zinc-700 w-full placeholder-grey-400 py-2 text-md outline-none"
+          >
+            {formState.direccion}
+          </p> */}
 
           <label
             htmlFor="entreCalles"
@@ -104,8 +104,14 @@ export const FormSticker = () => {
             placeholder="Entre calles"
             value={formState.entreCalles}
             onChange={(e) => onInputChange(e)}
-            className="border-b-2 border-zinc-700 w-full p-2  placeholder-grey-400 text-sm outline-none"
+            className="border-b-2 border-zinc-700 w-full py-2 placeholder-grey-400 text-sm outline-none"
+            // className="bg-red-500  py-5"
+            // className="hidden"
           />
+          {/* <p className="border-b-2 border-zinc-700 w-full placeholder-grey-400 py-2 text-md outline-none"
+          >
+            {formState.entreCalles}
+          </p> */}
 
           <label
             htmlFor="telefono"
@@ -120,8 +126,14 @@ export const FormSticker = () => {
             placeholder="Telefono de contacto"
             value={formState.telefono}
             onChange={(e) => onInputChange(e)}
-            className="border-b-2 border-zinc-700 w-full p-2  placeholder-grey-400 text-sm outline-none"
+            className="border-b-2 border-zinc-700 w-full py-2 placeholder-grey-400 text-sm outline-none"
+            // className="bg-red-500  py-5"
+            // className="hidden"
           />
+          {/* <p className="border-b-2 border-zinc-700 w-full placeholder-grey-400 py-2 text-md outline-none"
+          >
+            {formState.telefono}
+          </p> */}
 
           <label
             htmlFor="fecha"
@@ -135,8 +147,14 @@ export const FormSticker = () => {
             name="fecha"
             value={formState.fecha}
             onChange={(e) => onInputChange(e)}
-            className="border-b-2 border-zinc-700 w-full p-2  placeholder-grey-400 text-sm outline-none"
+            className="border-b-2 border-zinc-700 w-full py-2 placeholder-grey-400 text-sm outline-none"
+            // className="bg-red-500  py-5"
+            // className="hidden"
           />
+          {/* <p className="border-b-2 border-zinc-700 w-full placeholder-grey-400 py-2 text-md outline-none"
+          >
+            {formState.fecha}
+          </p> */}
 
           <label
             htmlFor="observaciones"
@@ -150,7 +168,7 @@ export const FormSticker = () => {
             name="observaciones"
             value={formState.observaciones}
             onChange={(e) => onInputChange(e)}
-            className="border-b-2 border-zinc-700 w-full p-2  placeholder-grey-400 text-sm outline-none"
+            className="border-b-2 border-zinc-700 w-full py-2 placeholder-grey-400 text-sm outline-none"
           />
         </div>
         <button
