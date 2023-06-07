@@ -3,10 +3,20 @@ import { StickerContext } from "./StickerContext";
 import { generateID } from "../helpers/generateID";
 
 export const StickerProvider = ({ children }) => {
-  const [stickers, setStickers] = useState([]);
+  const [user, setUser] = useState(
+    JSON.parse(localStorage.getItem("user")) ?? {}
+  );
+  const [isLogged, setIsLogged] = useState(
+    JSON.parse(localStorage.getItem("isLogged")) ?? false
+  );
+
+  const [stickers, setStickers] = useState(
+    JSON.parse(localStorage.getItem("stickers")) ?? []
+  );
+
   const addSticker = (newSticker) => {
     newSticker.id = generateID();
-    console.log(newSticker)
+    console.log(newSticker);
     setStickers([...stickers, newSticker]);
   };
 
@@ -16,19 +26,28 @@ export const StickerProvider = ({ children }) => {
     setStickers(newStickers);
   };
 
-  //   useEffect(() => {
-  //     const products = JSON.parse(localStorage.getItem("shoppingCart"));
-  //     if (products) {
-  //       setShoppingCart(products);
-  //     }
-  //   }, []);
+  useEffect(() => {
+    localStorage.setItem("stickers", JSON.stringify(stickers));
+  }, [stickers]);
+
+  useEffect(() => {
+    localStorage.setItem("user", JSON.stringify(user));
+  }, [user]);
+
+  useEffect(() => {
+    localStorage.setItem("isLogged", JSON.stringify(isLogged));
+  }, [isLogged]);
 
   return (
     <StickerContext.Provider
       value={{
         stickers,
+        user,
+        isLogged,
+        setIsLogged,
+        setUser,
         addSticker,
-        removeSticker
+        removeSticker,
       }}
     >
       {children}
