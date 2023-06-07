@@ -31,9 +31,7 @@ export const StickerList = () => {
   };
 
   const handleImprimir = () => {
-    // toPrint.map((item)=>(
-    //   console.log(`Imprimiendoo ${item.nombre}`)
-    // ))
+
 
     generatePDF(toPrint);
   };
