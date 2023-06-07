@@ -4,7 +4,7 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
-import { StickerGenerator, StickerList } from "../pages";
+import { StickerGenerator, StickerList,StickerSettings } from "../pages";
 import { SideBar } from "../components/SideBar";
 
 export const MyRoutes = () => {
@@ -15,6 +15,7 @@ export const MyRoutes = () => {
         <Routes>
           <Route exact path="/" element={<StickerList />} />
           <Route exact path="/generate" element={<StickerGenerator />} />
+          <Route exact path="/settings" element={<StickerSettings />} />
 
           <Route path="/*" element={<Navigate to="/" />} />
         </Routes>

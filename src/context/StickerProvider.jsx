@@ -6,14 +6,13 @@ export const StickerProvider = ({ children }) => {
   const [stickers, setStickers] = useState([]);
   const addSticker = (newSticker) => {
     newSticker.id = generateID();
+    console.log(newSticker)
     setStickers([...stickers, newSticker]);
   };
 
   const removeSticker = (stickerToRemove) => {
     const temp = stickers;
-
     const newStickers = temp.filter((item) => item.id !== stickerToRemove.id);
-
     setStickers(newStickers);
   };
 

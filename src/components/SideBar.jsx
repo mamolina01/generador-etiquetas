@@ -20,7 +20,7 @@ export const SideBar = () => {
       </Link>
       <Link to="/generate">
         <p className="p-3 cursor-pointer border-b-2 border-zinc-500 whitespace-nowrap transition-all hover:bg-zinc-700">
-          Generar Etiqueta
+          Diseña tu Etiqueta
         </p>
       </Link>
     </div>

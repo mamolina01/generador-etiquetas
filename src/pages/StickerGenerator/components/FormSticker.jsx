@@ -9,9 +9,10 @@ export const FormSticker = () => {
 
 	const [error, setError] = useState(false);
 	const { formState, isFormValid, onInputChange, resetForm } = useForm({
-		nombre: "",
 		direccion: "",
 		entreCalles: "",
+		barrio: "",
+		nombre: "",
 		telefono: "",
 		fecha: "",
 		observaciones: "",
@@ -48,22 +49,6 @@ export const FormSticker = () => {
 					)}
 
 					<label
-						htmlFor="nombre"
-						className="block text-zinc-700 uppercase font-bold"
-					>
-						Nombre Destinatario
-					</label>
-					<input
-						id="nombre"
-						name="nombre"
-						type="text"
-						placeholder="Nombre del destinatario"
-						value={formState.nombre}
-						onChange={(e) => onInputChange(e)}
-						className="border-b-2 border-zinc-700 w-full py-2 placeholder-grey-400 text-sm outline-none"
-					/>
-
-					<label
 						htmlFor="direccion"
 						className="block text-zinc-700 uppercase font-bold"
 					>
@@ -91,6 +76,38 @@ export const FormSticker = () => {
 						name="entreCalles"
 						placeholder="Entre calles"
 						value={formState.entreCalles}
+						onChange={(e) => onInputChange(e)}
+						className="border-b-2 border-zinc-700 w-full py-2 placeholder-grey-400 text-sm outline-none"
+					/>
+
+					<label
+						htmlFor="barrio"
+						className="block text-zinc-700 uppercase font-bold"
+					>
+						Barrio
+					</label>
+					<input
+						id="barrio"
+						type="text"
+						name="barrio"
+						placeholder="Barrio"
+						value={formState.barrio}
+						onChange={(e) => onInputChange(e)}
+						className="border-b-2 border-zinc-700 w-full py-2 placeholder-grey-400 text-sm outline-none"
+					/>
+
+					<label
+						htmlFor="nombre"
+						className="block text-zinc-700 uppercase font-bold"
+					>
+						Nombre Destinatario
+					</label>
+					<input
+						id="nombre"
+						name="nombre"
+						type="text"
+						placeholder="Nombre del destinatario"
+						value={formState.nombre}
 						onChange={(e) => onInputChange(e)}
 						className="border-b-2 border-zinc-700 w-full py-2 placeholder-grey-400 text-sm outline-none"
 					/>

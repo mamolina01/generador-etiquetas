@@ -3,16 +3,13 @@ import html2pdf from "html2pdf.js";
 export const generatePDF = (etiquetas) => {
 	// Contenido HTML del template
 	const template = generateTemplate(etiquetas);
-	console.log(template);
-	const pages = template.querySelector(".page");
-	console.log(pages);
 
 	// Opciones para la generación del PDF
 	const opciones = {
 		margin: 0,
 		filename: "mi-template.pdf",
 		image: { type: "jpeg", quality: 1 },
-		pagebreak: { mode: 'avoid-all', before: '#page2el' },
+		pagebreak: { mode: "avoid-all", before: "#page2el" },
 		html2canvas: { scale: 2 },
 		jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
 	};
@@ -38,7 +35,6 @@ const generateTemplate = (etiquetas) => {
 		stickerContainer.style.gap = "5px";
 		stickerContainer.style.maxHeight = "1120px";
 		for (const etiqueta of etiquetas.slice(i, limit)) {
-			delete etiqueta.id;
 			const div = document.createElement("div");
 			div.style.display = "flex";
 			div.style.flexDirection = "column";
@@ -99,24 +95,26 @@ const generateTemplate = (etiquetas) => {
 
 			const values = Object.keys(etiqueta);
 			for (const item of values) {
-				const h1 = document.createElement("h1");
-				h1.style.fontWeight = "600";
-				h1.style.textTransform = "uppercase";
+				if (item !== "id") {
+					const h1 = document.createElement("h1");
+					h1.style.fontWeight = "600";
+					h1.style.textTransform = "uppercase";
 
-				h1.innerHTML = item === "entreCalles" ? "entre calles" : item;
-				const divH3 = document.createElement("div");
-				divH3.style.width = "100%";
-				divH3.style.borderBottom = "1px solid black";
-				divH3.style.paddingBottom = "5px";
-				divH3.style.minHeight = "33px";
-				const h3 = document.createElement("h3");
-				h3.style.textTransform = "uppercase";
+					h1.innerHTML = item === "entreCalles" ? "entre calles" : item;
+					const divH3 = document.createElement("div");
+					divH3.style.width = "100%";
+					divH3.style.borderBottom = "1px solid black";
+					divH3.style.paddingBottom = "5px";
+					divH3.style.minHeight = "33px";
+					const h3 = document.createElement("h3");
+					h3.style.textTransform = "uppercase";
 
-				h3.innerHTML = etiqueta[item];
-				divH3.appendChild(h3);
-				div.appendChild(h1);
-				div.appendChild(divH3);
-				stickerContainer.appendChild(div);
+					h3.innerHTML = etiqueta[item];
+					divH3.appendChild(h3);
+					div.appendChild(h1);
+					div.appendChild(divH3);
+					stickerContainer.appendChild(div);
+				}
 			}
 		}
 		body.appendChild(stickerContainer);
