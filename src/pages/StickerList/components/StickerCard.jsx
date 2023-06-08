@@ -28,7 +28,7 @@ export const StickerCard = ({
 
   return (
     <>
-      <div className="flex bg-white text-zinc-700 gap-4 p-2 rounded-md mb-3 shadow-md shadow-stone-400">
+      <div className="flex bg-white text-zinc-700 gap-2 p-2 rounded-md mb-3 shadow-md shadow-stone-400">
         <div className="flex flex-col justify-evenly">
           <input
             type="checkbox"

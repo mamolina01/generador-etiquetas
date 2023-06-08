@@ -14,9 +14,14 @@ export const StickerProvider = ({ children }) => {
     JSON.parse(localStorage.getItem("stickers")) ?? []
   );
 
+  const setLogout = () => {
+		setUser({});
+		setStickers([]);
+		setIsLogged(false);
+	}
+
   const addSticker = (newSticker) => {
     newSticker.id = generateID();
-    console.log(newSticker);
     setStickers([...stickers, newSticker]);
   };
 
@@ -48,6 +53,7 @@ export const StickerProvider = ({ children }) => {
         setUser,
         addSticker,
         removeSticker,
+        setLogout
       }}
     >
       {children}

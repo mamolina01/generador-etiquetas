@@ -25,5 +25,5 @@ export const useForm = (initialValue = {}) => {
     return true;
   };
 
-  return { formState, isFormValid, onInputChange, resetForm };
+  return { formState, isFormValid, onInputChange,setFormState, resetForm };
 };
