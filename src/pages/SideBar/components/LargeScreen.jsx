@@ -12,7 +12,7 @@ export const LargeScreen = ({ user, setLogout }) => {
 						<img
 							src={user.logo}
 							alt="logo-marca"
-							className=" w-20 h-20 mx-auto rounded-full"
+							className=" w-20 h-20 mx-auto object-cover rounded-full"
 						/>
 					</Link>
 				</div>
