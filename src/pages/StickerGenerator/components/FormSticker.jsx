@@ -2,7 +2,7 @@ import { useContext, useEffect, useRef, useState } from "react";
 import { useForm } from "../../../hooks";
 import { HeaderSticker } from "./HeaderSticker";
 import { StickerContext } from "../../../context";
-import { getActualDate } from "../helpers";
+import { getActualDate } from "../../../helpers"
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 

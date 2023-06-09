@@ -60,7 +60,9 @@ export const StickerCard = ({
 					/>
 				</div>
 				<div
-					className={`${checked ? "cursor-pointer text-lg text-indigo-600" : "hidden"}`}
+					className={`${
+						checked ? "cursor-pointer text-lg text-indigo-600" : "hidden"
+					}`}
 				>
 					<BsFillCheckSquareFill
 						onClick={() => checkedInputRef.current.click()}
@@ -69,29 +71,33 @@ export const StickerCard = ({
 
 				<div
 					className={`grid grid-cols-6 gap-1 ${
-						showMore ? "grid-rows-5" : "grid-rows-3"
+						showMore ? "grid-rows-4" : "grid-rows-3"
 					} transition-all ease-in-out duration-900 w-full`}
 				>
 					<div className=" col-span-6 flex items-center">
 						<MdLocationPin />
 						<p className="font-bold uppercase text-lg">{sticker.direccion}</p>
 					</div>
-					<div className="flex gap-1 col-span-2 items-center">
+					<div className="flex gap-1 col-span-3 md:col-span-2 items-center">
 						<FaUserAlt />
 						<p>{sticker.nombre}</p>
 					</div>
-					<div className="flex gap-1 col-span-2 items-center">
+					<div className="flex gap-1 col-span-3 md:col-span-2 items-center">
 						<BsFillTelephoneFill />
 						<p>{sticker.telefono}</p>
 					</div>
-					<div className="flex gap-1 col-span-2 items-center">
+					<div
+						className={`${
+							showMore ? "flex" : "hidden md:flex"
+						} flex-col gap-1 col-span-3 md:col-span-2  transition-all`}
+					>
 						<BsCalendar />
 						<p>{sticker.fecha}</p>
 					</div>
 					<div
 						className={`${
 							showMore ? "flex" : "hidden"
-						} flex-col gap-1 col-span-2 row-span-2 transition-all`}
+						} flex-col gap-1 col-span-3 md:col-span-2  transition-all`}
 					>
 						<p className="font-bold">Entre</p>
 						<p>{sticker.entreCalles}</p>
@@ -99,7 +105,7 @@ export const StickerCard = ({
 					<div
 						className={`${
 							showMore ? "flex" : "hidden"
-						} flex-col gap-1 col-span-2 row-span-2 transition-all`}
+						} flex-col gap-1 col-span-3 md:col-span-2  transition-all`}
 					>
 						<p className="font-bold">Barrio</p>
 						<p>{sticker.barrio}</p>
@@ -107,7 +113,7 @@ export const StickerCard = ({
 					<div
 						className={`${
 							showMore ? "flex" : "hidden"
-						} flex-col gap-1 col-span-2 row-span-2 transition-all`}
+						} flex-col gap-1 col-span-3 md:col-span-2  transition-all`}
 					>
 						<p className="font-bold">Observaciones</p>
 						<p>{sticker.observaciones}</p>
@@ -131,7 +137,11 @@ export const StickerCard = ({
 						<p className="text-sm uppercase font-semibold">Eliminar</p>
 					</div>
 				</div>
-				<div className={`text-xl transition-all text-zinc-900 ${showMore && "rotate-90"}`}>
+				<div
+					className={`text-xl transition-all text-zinc-900 ${
+						showMore && "rotate-90"
+					}`}
+				>
 					<BsChevronRight onClick={() => setShowMore(!showMore)} />
 				</div>
 			</div>
