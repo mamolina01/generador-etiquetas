@@ -32,7 +32,7 @@ export const LargeScreen = ({ user, setLogout }) => {
 							location === "/generate" ? "bg-zinc-700" : ""
 						}`}
 					>
-						Diseña tu Etiqueta
+						Generar Etiqueta
 					</p>
 				</Link>
 			</div>

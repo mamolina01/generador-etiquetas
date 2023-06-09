@@ -46,7 +46,7 @@ export const SmallScreen = ({ user, setLogout }) => {
 				>
 					<Link to="/generate">
 						<button className="w-full" onClick={() => setShowMenu(false)}>
-							Diseña tu Etiqueta
+							Generar Etiqueta
 						</button>
 					</Link>
 				</div>

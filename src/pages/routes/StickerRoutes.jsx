@@ -13,7 +13,7 @@ export const StickerRoutes = () => {
         <SideBar />
         <Routes>
           <Route path="/" element={<StickerList />} />
-          <Route path="/generate" element={<StickerGenerator />} />
+          <Route path="/generate/:stickerId?" element={<StickerGenerator />} />
 
           <Route path="/*" element={<Navigate to="/" />} />
         </Routes>

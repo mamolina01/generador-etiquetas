@@ -1,22 +1,36 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { useForm } from "../../../hooks";
 import { HeaderSticker } from "./HeaderSticker";
 import { StickerContext } from "../../../context";
-// import { generatePDFhtml2canvas } from "../helpers/generatePDF";
+import { getActualDate } from "../helpers";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
-export const FormSticker = () => {
-	const { addSticker,user } = useContext(StickerContext);
+export const FormSticker = ({ stickerToEdit }) => {
+	const inputRef = useRef(null);
+	const { addSticker, editSticker, user } = useContext(StickerContext);
 
+	const navigate = useNavigate();
 	const [error, setError] = useState(false);
-	const { formState, isFormValid, onInputChange, resetForm } = useForm({
-		direccion: "",
-		entreCalles: "",
-		barrio: "",
-		nombre: "",
-		telefono: "",
-		fecha: "",
-		observaciones: "",
-	});
+	const { formState, isFormValid, onInputChange, setFormState, resetForm } =
+		useForm({
+			direccion: "",
+			entreCalles: "",
+			barrio: "",
+			nombre: "",
+			telefono: "",
+			fecha: getActualDate(),
+			observaciones: "",
+		});
+
+	useEffect(() => {
+		// const exists = stickers.filter((sticker) => sticker.id === stickerId);
+		if (stickerToEdit.length !== 0) {
+			setFormState(stickerToEdit[0]);
+		} else {
+			resetForm();
+		}
+	}, [stickerToEdit]);
 
 	const handleSubmit = () => {
 		const validation = isFormValid();
@@ -26,18 +40,29 @@ export const FormSticker = () => {
 		}
 		setError(false);
 
-		// generatePDFhtml2canvas(document.getElementById("pdf"));
+		Swal.fire({
+			icon: "success",
+			title: "Etiqueta guardada",
+			text: "Disponible en Mis Etiquetas",
+			showConfirmButton: false,
+			timer: 1500,
+			returnFocus: false,
+		});
 
-		addSticker(formState);
+		if (formState.id) {
+			editSticker(formState);
+			navigate("/");
+		} else {
+			addSticker(formState);
+		}
 		resetForm();
+		inputRef.current.focus();
 	};
 	return (
 		<>
 			<div className="bg-white shadow-md shadow-stone-400 rounded-lg  my-5">
 				<div className="flex flex-col gap-2 p-5" id="pdf">
-					<HeaderSticker
-						user={user}
-					/>
+					<HeaderSticker user={user} />
 					{error && (
 						<p className="w-full text-center bg-red-500 text-white font-bold p-1 mt-2">
 							COMPLETA TODOS LOS CAMPOS
@@ -51,6 +76,7 @@ export const FormSticker = () => {
 						Dirección
 					</label>
 					<input
+						ref={inputRef}
 						id="direccion"
 						type="text"
 						name="direccion"
@@ -159,7 +185,7 @@ export const FormSticker = () => {
 						hover:bg-indigo-700 cursor-pointer transition-all"
 						onClick={handleSubmit}
 					>
-						Generar etiqueta
+						{formState.id ? "Modificar etiqueta" : "Generar etiqueta"}
 					</button>
 				</div>
 			</div>

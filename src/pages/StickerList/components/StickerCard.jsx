@@ -1,70 +1,140 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { MdLocationPin } from "react-icons/md";
 import { FaUserAlt } from "react-icons/fa";
-import { BsFillTelephoneFill, BsCalendar } from "react-icons/bs";
+import {
+	BsFillTelephoneFill,
+	BsCalendar,
+	BsTrashFill,
+	BsChevronRight,
+	BsFillCheckSquareFill,
+} from "react-icons/bs";
+
+import { ImCheckboxUnchecked } from "react-icons/im";
+import { BiEdit } from "react-icons/bi";
 import { StickerContext } from "../../../context";
+import { Link } from "react-router-dom";
 
 export const StickerCard = ({
-  sticker,
-  toPrint,
-  addStickersToPrint,
-  removeStickersToPrint,
+	sticker,
+	selected,
+	addStickersToPrint,
+	removeStickersToPrint,
 }) => {
-  const { removeSticker } = useContext(StickerContext);
-  const [checked, setChecked] = useState(false);
+	const checkedInputRef = useRef();
 
-  const handleChecked = (e) => {
-    if (e.target.checked) {
-      addStickersToPrint(sticker);
-    } else {
-      removeStickersToPrint(sticker);
-    }
-  };
+	const { removeSticker } = useContext(StickerContext);
+	const [checked, setChecked] = useState(false);
+	const [showMore, setShowMore] = useState(false);
 
-  useEffect(() => {
-    const finded = toPrint.find((item) => item.id === sticker.id);
-    setChecked(!!finded);
-  }, [toPrint]);
+	const handleChecked = (e) => {
+		if (e.target.checked) {
+			addStickersToPrint(sticker);
+		} else {
+			removeStickersToPrint(sticker);
+		}
+	};
 
-  return (
-    <>
-      <div className="flex bg-white text-zinc-700 gap-2 p-2 rounded-md mb-3 shadow-md shadow-stone-400">
-        <div className="flex flex-col justify-evenly">
-          <input
-            type="checkbox"
-            checked={checked}
-            className="cursor-pointer"
-            onChange={(e) => handleChecked(e)}
-          />
-          <button
-            className="items-center text-xl font-semibold text-red-600 text-center"
-            onClick={() => {
-              removeSticker(sticker);
-            }}
-          >
-            X
-          </button>
-        </div>
+	useEffect(() => {
+		const finded = selected.find((item) => item.id === sticker.id);
+		setChecked(!!finded);
+	}, [selected]);
 
-        <div className=" grid grid-cols-3 grid-rows-2 w-full">
-          <div className=" col-span-3 flex items-center">
-            <MdLocationPin />
-            <p className="font-bold uppercase text-lg">{sticker.direccion}</p>
-          </div>
-          <div className="flex gap-1 items-center">
-            <FaUserAlt />
-            <p>{sticker.nombre}</p>
-          </div>
-          <div className="flex gap-1 items-center">
-            <BsFillTelephoneFill />
-            <p>{sticker.telefono}</p>
-          </div>
-          <div className="flex gap-1 items-center">
-            <BsCalendar />
-            <p>{sticker.fecha}</p>
-          </div>
-        </div>
-      </div>
-    </>
-  );
+	return (
+		<>
+			<div className="flex bg-white text-zinc-700 gap-2 p-2 rounded-md mb-3 shadow-md shadow-stone-400 items-center">
+				<input
+					type="checkbox"
+					checked={checked}
+					ref={checkedInputRef}
+					className="hidden"
+					onChange={(e) => handleChecked(e)}
+				/>
+
+				<div
+					className={`${
+						!checked ? "cursor-pointer text-lg text-indigo-600" : "hidden"
+					}`}
+				>
+					<ImCheckboxUnchecked
+						onClick={() => checkedInputRef.current.click()}
+					/>
+				</div>
+				<div
+					className={`${checked ? "cursor-pointer text-lg text-indigo-600" : "hidden"}`}
+				>
+					<BsFillCheckSquareFill
+						onClick={() => checkedInputRef.current.click()}
+					/>
+				</div>
+
+				<div
+					className={`grid grid-cols-6 gap-1 ${
+						showMore ? "grid-rows-5" : "grid-rows-3"
+					} transition-all ease-in-out duration-900 w-full`}
+				>
+					<div className=" col-span-6 flex items-center">
+						<MdLocationPin />
+						<p className="font-bold uppercase text-lg">{sticker.direccion}</p>
+					</div>
+					<div className="flex gap-1 col-span-2 items-center">
+						<FaUserAlt />
+						<p>{sticker.nombre}</p>
+					</div>
+					<div className="flex gap-1 col-span-2 items-center">
+						<BsFillTelephoneFill />
+						<p>{sticker.telefono}</p>
+					</div>
+					<div className="flex gap-1 col-span-2 items-center">
+						<BsCalendar />
+						<p>{sticker.fecha}</p>
+					</div>
+					<div
+						className={`${
+							showMore ? "flex" : "hidden"
+						} flex-col gap-1 col-span-2 row-span-2 transition-all`}
+					>
+						<p className="font-bold">Entre</p>
+						<p>{sticker.entreCalles}</p>
+					</div>
+					<div
+						className={`${
+							showMore ? "flex" : "hidden"
+						} flex-col gap-1 col-span-2 row-span-2 transition-all`}
+					>
+						<p className="font-bold">Barrio</p>
+						<p>{sticker.barrio}</p>
+					</div>
+					<div
+						className={`${
+							showMore ? "flex" : "hidden"
+						} flex-col gap-1 col-span-2 row-span-2 transition-all`}
+					>
+						<p className="font-bold">Observaciones</p>
+						<p>{sticker.observaciones}</p>
+					</div>
+					<div className="flex justify-center cursor-pointer gap-1 border-2 rounded-md w-full border-indigo-700 text-indigo-700 hover:bg-indigo-700 hover:text-white transition-all col-span-3">
+						<Link
+							to={`/generate/${sticker.id}`}
+							className="flex w-full h-full justify-center items-center"
+						>
+							<BiEdit className="text-lg" />
+							<p className="text-sm uppercase font-semibold">Modificar</p>
+						</Link>
+					</div>
+					<div
+						className="flex justify-center cursor-pointer gap-1 border-2 rounded-md w-full border-red-500 text-red-500 hover:bg-red-500 hover:text-white transition-all p-1 col-span-3 items-center"
+						onClick={() => {
+							removeSticker([sticker]);
+						}}
+					>
+						<BsTrashFill className="text-lg" />
+						<p className="text-sm uppercase font-semibold">Eliminar</p>
+					</div>
+				</div>
+				<div className={`text-xl transition-all text-zinc-900 ${showMore && "rotate-90"}`}>
+					<BsChevronRight onClick={() => setShowMore(!showMore)} />
+				</div>
+			</div>
+		</>
+	);
 };
