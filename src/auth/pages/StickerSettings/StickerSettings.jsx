@@ -19,7 +19,12 @@ export const StickerSettings = () => {
 
 	const [error, setError] = useState(false);
 
-
+	const onFileInputChange = (image) => {
+		setFormState({
+			...formState,
+			logo: image,
+		});
+	};
 
 	const handleSubmit = async () => {
 		const validation = isFormValid();
@@ -73,6 +78,7 @@ export const StickerSettings = () => {
 						>
 							Logo del Negocio
 						</label>
+
 						<div className="border-b-2 border-zinc-700 w-full py-2">
 							<InputImage
 								onFileInputChange={onFileInputChange}

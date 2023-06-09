@@ -182,7 +182,7 @@ export const FormSticker = ({ stickerToEdit }) => {
 
 					<button
 						className="bg-indigo-600 w-full mt-2 p-3 text-white uppercase font-bold  
-						hover:bg-indigo-700 cursor-pointer transition-all"
+						hover:bg-indigo-700 cursor-pointer transition-all outline-none"
 						onClick={handleSubmit}
 					>
 						{formState.id ? "Modificar etiqueta" : "Generar etiqueta"}

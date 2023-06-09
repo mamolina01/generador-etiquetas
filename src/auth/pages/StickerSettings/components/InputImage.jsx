@@ -47,7 +47,7 @@ export const InputImage = ({ onFileInputChange, logo }) => {
 					>
 						<input {...getInputProps()} />
 						<BsFillCloudArrowUpFill size="3em" className=" text-zinc-600" />
-						<p className=" text-zinc-600 text-lg">
+						<p className=" text-zinc-600 text-lg text-center">
 							Arrastra un archivo o haz click para buscar
 						</p>
 					</div>
