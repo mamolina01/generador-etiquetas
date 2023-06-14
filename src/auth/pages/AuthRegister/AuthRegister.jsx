@@ -1,13 +1,14 @@
 import React from "react";
 import { useState } from "react";
-import { useForm } from "../../../hooks";
+import { useAuthenthicated, useForm } from "../../../hooks";
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { StickerContext } from "../../../context";
 
-export const AuthRegister = ({ setIsRegistered }) => {
+export const AuthRegister = () => {
 	const [error, setError] = useState(false);
-	const { setUser, setProfile, setIsLogged } = useContext(StickerContext);
+	// const { setUser, setProfile, setIsLogged } = useContext(StickerContext);
+	const { startRegister } = useAuthenthicated();
 
 	const { formState, isFormValid, onInputChange, setFormState, resetForm } =
 		useForm({
@@ -18,16 +19,15 @@ export const AuthRegister = ({ setIsRegistered }) => {
 
 	const handleSubmit = async () => {
 		const validation = isFormValid();
+
 		if (!validation) {
-			setError(true);
+			setError("COMPLETA TODOS LOS CAMPOS");
 			return;
 		}
 
-		setError(false);
-		setUser({ email: formState.email });
-		setProfile({ name: formState.name });
-		setIsLogged(true);
+		// startRegister(formState)
 
+		setError(false);
 		resetForm();
 	};
 	return (
@@ -43,7 +43,7 @@ export const AuthRegister = ({ setIsRegistered }) => {
 						</h3>
 						{error && (
 							<p className="w-full text-center bg-red-500 text-white font-bold p-2 mt-2">
-								COMPLETA TODOS LOS CAMPOS
+								{error}
 							</p>
 						)}
 						<div>
