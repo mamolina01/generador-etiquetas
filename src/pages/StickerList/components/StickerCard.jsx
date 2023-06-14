@@ -70,9 +70,7 @@ export const StickerCard = ({
 				</div>
 
 				<div
-					className={`grid grid-cols-6 gap-1 ${
-						showMore ? "grid-rows-4" : "grid-rows-3"
-					} transition-all ease-in-out duration-900 w-full`}
+					className={`grid grid-cols-6 gap-1 transition-all auto-cols-auto ease-in-out duration-900 w-full`}
 				>
 					<div className=" col-span-6 flex items-center">
 						<MdLocationPin />
@@ -89,7 +87,7 @@ export const StickerCard = ({
 					<div
 						className={`${
 							showMore ? "flex" : "hidden md:flex"
-						} flex-col gap-1 col-span-3 md:col-span-2  transition-all`}
+						} flex-col md:flex-row gap-1 col-span-3 md:col-span-2 md:items-center transition-all`}
 					>
 						<BsCalendar />
 						<p>{sticker.fecha}</p>
@@ -118,7 +116,7 @@ export const StickerCard = ({
 						<p className="font-bold">Observaciones</p>
 						<p>{sticker.observaciones}</p>
 					</div>
-					<div className="flex justify-center cursor-pointer gap-1 border-2 rounded-md w-full border-indigo-700 text-indigo-700 hover:bg-indigo-700 hover:text-white transition-all col-span-3">
+					<div className="flex justify-center cursor-pointer gap-1 border-2 rounded-md w-full border-indigo-700 text-indigo-700 hover:bg-indigo-700 hover:text-white transition-all p-1 col-span-3">
 						<Link
 							to={`/generate/${sticker.id}`}
 							className="flex w-full h-full justify-center items-center"

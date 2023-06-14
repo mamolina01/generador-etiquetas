@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 
-export const LargeScreen = ({ user, setLogout }) => {
+export const LargeScreen = ({ profile, setLogout }) => {
 	const location = useLocation().pathname;
 
 	return (
@@ -10,13 +10,13 @@ export const LargeScreen = ({ user, setLogout }) => {
 				<div className="mt-24">
 					<Link to="/">
 						<img
-							src={user.logo}
+							src={profile.logo}
 							alt="logo-marca"
 							className=" w-20 h-20 mx-auto object-cover rounded-full"
 						/>
 					</Link>
 				</div>
-				<p className="mt-2 mb-5 capitalize">{user.nombre}</p>
+				<p className="mt-2 mb-5 capitalize">{profile.nombre}</p>
 				<Link to="/">
 					<p
 						className={`p-3 cursor-pointer border-y-2 border-zinc-500 whitespace-nowrap transition-all hover:bg-zinc-700 ${

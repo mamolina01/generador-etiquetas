@@ -5,7 +5,7 @@ import { SmallScreen } from "./components/SmallScreen";
 import Swal from "sweetalert2";
 
 export const SideBar = () => {
-	const { user, setLogout } = useContext(StickerContext);
+	const { profile, setLogout } = useContext(StickerContext);
 
 	const Logout = () => {
 		Swal.fire({
@@ -24,8 +24,8 @@ export const SideBar = () => {
 	};
 	return (
 		<>
-			<SmallScreen user={user} setLogout={Logout} />
-			<LargeScreen user={user} setLogout={Logout} />
+			<SmallScreen profile={profile} setLogout={Logout} />
+			<LargeScreen profile={profile} setLogout={Logout} />
 		</>
 	);
 };

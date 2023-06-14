@@ -1,1 +1,2 @@
-export * from './StickerSettings/StickerSettings'
+export * from './AuthLogin/AuthLogin'
+export * from './AuthRegister/AuthRegister'
