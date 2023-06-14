@@ -6,6 +6,9 @@ export const StickerProvider = ({ children }) => {
 	const [user, setUser] = useState(
 		JSON.parse(localStorage.getItem("user")) ?? {}
 	);
+	const [profile, setProfile] = useState(
+		JSON.parse(localStorage.getItem("profile")) ?? {}
+	);
 	const [isLogged, setIsLogged] = useState(
 		JSON.parse(localStorage.getItem("isLogged")) ?? false
 	);
@@ -16,6 +19,7 @@ export const StickerProvider = ({ children }) => {
 
 	const setLogout = () => {
 		setUser({});
+		setProfile({});
 		setStickers([]);
 		setIsLogged(false);
 	};
@@ -50,6 +54,10 @@ export const StickerProvider = ({ children }) => {
 	}, [user]);
 
 	useEffect(() => {
+		localStorage.setItem("profile", JSON.stringify(profile));
+	}, [profile]);
+
+	useEffect(() => {
 		localStorage.setItem("isLogged", JSON.stringify(isLogged));
 	}, [isLogged]);
 
@@ -59,6 +67,8 @@ export const StickerProvider = ({ children }) => {
 				stickers,
 				user,
 				isLogged,
+				profile,
+				setProfile,
 				setIsLogged,
 				setUser,
 				addSticker,

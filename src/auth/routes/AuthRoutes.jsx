@@ -1,15 +1,15 @@
 import React from "react";
-import { Navigate, Route, Router, Routes } from "react-router-dom";
-import { StickerSettings } from "../pages";
+import { Navigate, Route, Routes } from "react-router-dom";
+import { AuthLogin, AuthRegister } from "../pages";
 
 export const AuthRoutes = () => {
-
-  return (
-      <div className="flex">
-        <Routes>
-          <Route path="settings" element={<StickerSettings />} />
-          <Route path="/*" element={<Navigate to="/auth/settings" />} />
-        </Routes>
-      </div>
-  );
+	return (
+		<div className="flex">
+			<Routes>
+				<Route path="/login" element={<AuthLogin />} />
+				<Route path="/register" element={<AuthRegister />} />
+				<Route path="/*" element={<Navigate to="/auth/login" />} />
+			</Routes>
+		</div>
+	);
 };

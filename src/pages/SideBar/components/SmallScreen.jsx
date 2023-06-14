@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { AiOutlineMenu } from "react-icons/ai";
 
-export const SmallScreen = ({ user, setLogout }) => {
+export const SmallScreen = ({ profile, setLogout }) => {
 	const [showMenu, setShowMenu] = useState(false);
 	const location = useLocation().pathname;
 
@@ -13,7 +13,7 @@ export const SmallScreen = ({ user, setLogout }) => {
 					<AiOutlineMenu className="text-white text-3xl " />
 				</div>
 				<h1 className="uppercase text-white text-xl font-semibold">
-					{user.nombre}
+					{profile.nombre}
 				</h1>
 			</div>
 
@@ -24,7 +24,7 @@ export const SmallScreen = ({ user, setLogout }) => {
 				gap-2 z-20 flex flex-col lg:hidden justify-between items-center`}
 			>
 				<img
-					src={user.logo}
+					src={profile.logo}
 					alt="logo-marca"
 					className=" w-20 h-20 mx-auto object-cover rounded-full"
 				/>

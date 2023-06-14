@@ -1,17 +1,14 @@
 import React, { useContext, useRef, useState } from "react";
-import { BsFillCloudArrowUpFill } from "react-icons/bs";
-import { useForm } from "../../../hooks";
-import { StickerContext } from "../../../context";
+import { useForm } from "../../hooks";
+import { StickerContext } from "../../context";
 import { uploadFile } from "./helpers";
 import { InputImage } from "./components";
 
-export const StickerSettings = () => {
-	const { setUser, setIsLogged } = useContext(StickerContext);
+export const StickerProfile = () => {
+	const { setProfile, profile } = useContext(StickerContext);
 
-	const fileInputRef = useRef();
 	const { formState, isFormValid, onInputChange, setFormState, resetForm } =
 		useForm({
-			nombre: "",
 			instagram: "",
 			whatsapp: "",
 			logo: [],
@@ -36,9 +33,9 @@ export const StickerSettings = () => {
 		const resp = await uploadFile(formState.logo[0]);
 
 		formState.logo = resp;
+		formState.name=profile.name
 		setError(false);
-		setUser(formState);
-		setIsLogged(true);
+		setProfile(formState);
 
 		resetForm();
 	};
@@ -56,21 +53,6 @@ export const StickerSettings = () => {
 								COMPLETA TODOS LOS CAMPOS
 							</p>
 						)}
-						<label
-							htmlFor="nombre"
-							className="block text-zinc-700 uppercase font-bold"
-						>
-							Nombre del negocio
-						</label>
-						<input
-							id="nombre"
-							type="text"
-							name="nombre"
-							placeholder="Nombre del negocio"
-							value={formState.nombre}
-							onChange={(e) => onInputChange(e)}
-							className="border-b-2 rounded-none border-zinc-700 w-full py-2 placeholder-zinc-600 text-sm outline-none"
-						/>
 
 						<label
 							htmlFor="logo"
