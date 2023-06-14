@@ -9,7 +9,7 @@ export const SideBar = () => {
 
 	const Logout = () => {
 		Swal.fire({
-			title: "Desea cerrar sesión?",
+			title: "¿Desea cerrar sesión?",
 			icon: "warning",
 			showCancelButton: true,
 			confirmButtonColor: "#4F46E5",
