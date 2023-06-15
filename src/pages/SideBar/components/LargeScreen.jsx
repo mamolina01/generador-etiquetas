@@ -16,7 +16,7 @@ export const LargeScreen = ({ profile, setLogout }) => {
 						/>
 					</Link>
 				</div>
-				<p className="mt-2 mb-5 capitalize">{profile.nombre}</p>
+				<p className="mt-2 mb-5 capitalize">{profile.name}</p>
 				<Link to="/">
 					<p
 						className={`p-3 cursor-pointer border-y-2 border-zinc-500 whitespace-nowrap transition-all hover:bg-zinc-700 ${

@@ -1,11 +1,12 @@
 import React, { useContext, useRef, useState } from "react";
-import { useForm } from "../../hooks";
+import { useAuthenthicated, useForm } from "../../hooks";
 import { StickerContext } from "../../context";
 import { uploadFile } from "./helpers";
 import { InputImage } from "./components";
 
 export const StickerProfile = () => {
 	const { setProfile, profile } = useContext(StickerContext);
+	const { startSetProfile } = useAuthenthicated();
 
 	const { formState, isFormValid, onInputChange, setFormState, resetForm } =
 		useForm({
@@ -26,18 +27,19 @@ export const StickerProfile = () => {
 	const handleSubmit = async () => {
 		const validation = isFormValid();
 		if (!validation) {
-			setError(true);
+			setError("COMPLETA TODOS LOS CAMPOS");
 			return;
 		}
 
 		const resp = await uploadFile(formState.logo[0]);
 
 		formState.logo = resp;
-		formState.name=profile.name
-		setError(false);
-		setProfile(formState);
+		formState.name = profile.name;
+		const message = await startSetProfile(formState);
+		console.log(message);
+		setError(message);
 
-		resetForm();
+		// resetForm();
 	};
 
 	return (
@@ -50,7 +52,7 @@ export const StickerProfile = () => {
 					<div className="w-full mx-auto p-5 my-5 flex flex-col gap-2 bg-white rounded-md shadow-md shadow-stone-400">
 						{error && (
 							<p className="w-full text-center bg-red-500 text-white font-bold p-2 mt-2">
-								COMPLETA TODOS LOS CAMPOS
+								{error}
 							</p>
 						)}
 

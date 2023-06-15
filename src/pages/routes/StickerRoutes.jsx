@@ -13,8 +13,6 @@ import { StickerContext } from "../../context";
 export const StickerRoutes = () => {
 	const { profile } = useContext(StickerContext);
 
-	console.log(validateFiles(profile));
-
 	return (
 		<div className="flex flex-col md:flex-row">
 			{validateFiles(profile) ? (

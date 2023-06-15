@@ -13,7 +13,7 @@ export const SmallScreen = ({ profile, setLogout }) => {
 					<AiOutlineMenu className="text-white text-3xl " />
 				</div>
 				<h1 className="uppercase text-white text-xl font-semibold">
-					{profile.nombre}
+					{profile.name}
 				</h1>
 			</div>
 

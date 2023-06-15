@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { StickerContext } from "./StickerContext";
-import { generateID } from "../helpers/generateID";
 
 export const StickerProvider = ({ children }) => {
   const [user, setUser] = useState(
@@ -25,7 +24,6 @@ export const StickerProvider = ({ children }) => {
   };
 
   const addSticker = (newSticker) => {
-    newSticker.id = generateID();
     setStickers([...stickers, newSticker]);
   };
 

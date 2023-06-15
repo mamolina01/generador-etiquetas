@@ -74,15 +74,15 @@ export const StickerCard = ({
 				>
 					<div className=" col-span-6 flex items-center">
 						<MdLocationPin />
-						<p className="font-bold uppercase text-lg">{sticker.direccion}</p>
+						<p className="font-bold uppercase text-lg">{sticker.address}</p>
 					</div>
 					<div className="flex gap-1 col-span-3 md:col-span-2 items-center">
 						<FaUserAlt />
-						<p>{sticker.nombre}</p>
+						<p>{sticker.nameReceiver}</p>
 					</div>
 					<div className="flex gap-1 col-span-3 md:col-span-2 items-center">
 						<BsFillTelephoneFill />
-						<p>{sticker.telefono}</p>
+						<p>{sticker.telephone}</p>
 					</div>
 					<div
 						className={`${
@@ -90,7 +90,7 @@ export const StickerCard = ({
 						} flex-col md:flex-row gap-1 col-span-3 md:col-span-2 md:items-center transition-all`}
 					>
 						<BsCalendar />
-						<p>{sticker.fecha}</p>
+						<p>{sticker.date}</p>
 					</div>
 					<div
 						className={`${
@@ -98,7 +98,7 @@ export const StickerCard = ({
 						} flex-col gap-1 col-span-3 md:col-span-2  transition-all`}
 					>
 						<p className="font-bold">Entre</p>
-						<p>{sticker.entreCalles}</p>
+						<p>{sticker.betweenStreets}</p>
 					</div>
 					<div
 						className={`${
@@ -106,7 +106,7 @@ export const StickerCard = ({
 						} flex-col gap-1 col-span-3 md:col-span-2  transition-all`}
 					>
 						<p className="font-bold">Barrio</p>
-						<p>{sticker.barrio}</p>
+						<p>{sticker.neighborhood}</p>
 					</div>
 					<div
 						className={`${
@@ -114,7 +114,7 @@ export const StickerCard = ({
 						} flex-col gap-1 col-span-3 md:col-span-2  transition-all`}
 					>
 						<p className="font-bold">Observaciones</p>
-						<p>{sticker.observaciones}</p>
+						<p>{sticker.observations}</p>
 					</div>
 					<div className="flex justify-center cursor-pointer gap-1 border-2 rounded-md w-full border-indigo-700 text-indigo-700 hover:bg-indigo-700 hover:text-white transition-all p-1 col-span-3">
 						<Link

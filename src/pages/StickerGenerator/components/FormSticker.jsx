@@ -5,40 +5,42 @@ import { StickerContext } from "../../../context";
 import { getActualDate } from "../../../helpers";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import { useManageStickers } from "../../../hooks";
 
 export const FormSticker = ({ stickerToEdit }) => {
 	const inputRef = useRef(null);
 	const { addSticker, editSticker, profile } = useContext(StickerContext);
+	const { saveSticker } = useManageStickers();
 
 	const navigate = useNavigate();
 	const [error, setError] = useState(false);
 	const { formState, isFormValid, onInputChange, setFormState, resetForm } =
 		useForm({
-			direccion: "",
-			entreCalles: "",
-			barrio: "",
-			nombre: "",
-			telefono: "",
-			fecha: getActualDate(),
-			observaciones: "",
+			address: "",
+			betweenStreets: "",
+			neighborhood: "",
+			nameReceiver: "",
+			telephone: "",
+			date: getActualDate(),
+			observations: "",
 		});
 
 	useEffect(() => {
 		// const exists = stickers.filter((sticker) => sticker.id === stickerId);
 		if (stickerToEdit.length !== 0) {
 			setFormState(stickerToEdit[0]);
-		} else {
-			resetForm();
-		}
+		} 
+		// else {
+		// 	resetForm();
+		// }
 	}, [stickerToEdit]);
 
-	const handleSubmit = () => {
+	const handleSubmit = async () => {
 		const validation = isFormValid();
 		if (!validation) {
-			setError(true);
+			setError("COMPLETA TODOS LOS CAMPOS");
 			return;
 		}
-		setError(false);
 
 		Swal.fire({
 			icon: "success",
@@ -49,14 +51,17 @@ export const FormSticker = ({ stickerToEdit }) => {
 			returnFocus: false,
 		});
 
-		if (formState.id) {
-			editSticker(formState);
-			navigate("/");
-		} else {
-			addSticker(formState);
-		}
-		resetForm();
-		inputRef.current.focus();
+		// if (formState._id) {
+		// 	editSticker(formState);
+		// 	navigate("/");
+		// } else {
+		// 	addSticker(formState);
+		// }
+		const message = await saveSticker(formState);
+		setError(message);
+
+		// resetForm();
+		// inputRef.current.focus();
 	};
 	return (
 		<>
@@ -65,24 +70,24 @@ export const FormSticker = ({ stickerToEdit }) => {
 					<HeaderSticker user={profile} />
 					{error && (
 						<p className="w-full text-center bg-red-500 text-white font-bold p-1 mt-2">
-							COMPLETA TODOS LOS CAMPOS
+							{error}
 						</p>
 					)}
 
 					<div>
 						<label
-							htmlFor="direccion"
+							htmlFor="address"
 							className="block text-zinc-700 uppercase font-semibold"
 						>
 							Dirección
 						</label>
 						<input
 							ref={inputRef}
-							id="direccion"
+							id="address"
 							type="text"
-							name="direccion"
+							name="address"
 							placeholder="Dirección del destinatario"
-							value={formState.direccion}
+							value={formState.address}
 							onChange={(e) => onInputChange(e)}
 							className="border-b-2 rounded-none border-zinc-300 w-full py-1 placeholder-grey-400 text-sm outline-none"
 						/>
@@ -90,17 +95,17 @@ export const FormSticker = ({ stickerToEdit }) => {
 
 					<div>
 						<label
-							htmlFor="entreCalles"
+							htmlFor="betweenStreets"
 							className="block text-zinc-700 uppercase font-semibold"
 						>
 							Entre calles
 						</label>
 						<input
-							id="entreCalles"
+							id="betweenStreets"
 							type="text"
-							name="entreCalles"
+							name="betweenStreets"
 							placeholder="Entre calles"
-							value={formState.entreCalles}
+							value={formState.betweenStreets}
 							onChange={(e) => onInputChange(e)}
 							className="border-b-2 rounded-none border-zinc-300 w-full py-1 placeholder-grey-400 text-sm outline-none"
 						/>
@@ -108,17 +113,17 @@ export const FormSticker = ({ stickerToEdit }) => {
 
 					<div>
 						<label
-							htmlFor="barrio"
+							htmlFor="neighborhood"
 							className="block text-zinc-700 uppercase font-semibold"
 						>
 							Barrio
 						</label>
 						<input
-							id="barrio"
+							id="neighborhood"
 							type="text"
-							name="barrio"
+							name="neighborhood"
 							placeholder="Barrio"
-							value={formState.barrio}
+							value={formState.neighborhood}
 							onChange={(e) => onInputChange(e)}
 							className="border-b-2 rounded-none border-zinc-300 w-full py-1 placeholder-grey-400 text-sm outline-none"
 						/>
@@ -126,17 +131,17 @@ export const FormSticker = ({ stickerToEdit }) => {
 
 					<div>
 						<label
-							htmlFor="nombre"
+							htmlFor="nameReceiver"
 							className="block text-zinc-700 uppercase font-semibold"
 						>
 							Nombre Destinatario
 						</label>
 						<input
-							id="nombre"
-							name="nombre"
+							id="nameReceiver"
+							name="nameReceiver"
 							type="text"
 							placeholder="Nombre del destinatario"
-							value={formState.nombre}
+							value={formState.nameReceiver}
 							onChange={(e) => onInputChange(e)}
 							className="border-b-2 rounded-none border-zinc-300 w-full py-1 placeholder-grey-400 text-sm outline-none"
 						/>
@@ -144,17 +149,17 @@ export const FormSticker = ({ stickerToEdit }) => {
 
 					<div>
 						<label
-							htmlFor="telefono"
+							htmlFor="telephone"
 							className="block text-zinc-700 uppercase font-semibold"
 						>
 							Telefono
 						</label>
 						<input
-							id="telefono"
+							id="telephone"
 							type="text"
-							name="telefono"
+							name="telephone"
 							placeholder="Telefono de contacto"
-							value={formState.telefono}
+							value={formState.telephone}
 							onChange={(e) => onInputChange(e)}
 							className="border-b-2 rounded-none border-zinc-300 w-full py-1 placeholder-grey-400 text-sm outline-none"
 						/>
@@ -162,16 +167,16 @@ export const FormSticker = ({ stickerToEdit }) => {
 
 					<div>
 						<label
-							htmlFor="fecha"
+							htmlFor="date"
 							className="block text-zinc-700 uppercase font-semibold"
 						>
 							Fecha
 						</label>
 						<input
-							id="fecha"
+							id="date"
 							type="date"
-							name="fecha"
-							value={formState.fecha}
+							name="date"
+							value={formState.date}
 							onChange={(e) => onInputChange(e)}
 							className="border-b-2 rounded-none border-zinc-300 w-full py-1 placeholder-grey-400 text-sm outline-none"
 						/>
@@ -179,16 +184,16 @@ export const FormSticker = ({ stickerToEdit }) => {
 
 					<div>
 						<label
-							htmlFor="observaciones"
+							htmlFor="observations"
 							className="block text-zinc-700 uppercase font-semibold"
 						>
 							Observaciones
 						</label>
 						<textarea
-							id="observaciones"
+							id="observations"
 							placeholder="Indique las observaciones"
-							name="observaciones"
-							value={formState.observaciones}
+							name="observations"
+							value={formState.observations}
 							onChange={(e) => onInputChange(e)}
 							className="border-b-2 rounded-none border-zinc-300 w-full py-1 placeholder-grey-400 text-sm outline-none"
 						/>
