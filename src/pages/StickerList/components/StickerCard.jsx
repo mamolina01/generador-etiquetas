@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { MdLocationPin } from "react-icons/md";
 import { FaUserAlt } from "react-icons/fa";
 import {
@@ -11,8 +11,8 @@ import {
 
 import { ImCheckboxUnchecked } from "react-icons/im";
 import { BiEdit } from "react-icons/bi";
-import { StickerContext } from "../../../context";
 import { Link } from "react-router-dom";
+import { useManageStickers } from "../../../hooks";
 
 export const StickerCard = ({
 	sticker,
@@ -22,7 +22,7 @@ export const StickerCard = ({
 }) => {
 	const checkedInputRef = useRef();
 
-	const { removeSticker } = useContext(StickerContext);
+	const { deleteSticker } = useManageStickers();
 	const [checked, setChecked] = useState(false);
 	const [showMore, setShowMore] = useState(false);
 
@@ -76,7 +76,7 @@ export const StickerCard = ({
 						<MdLocationPin />
 						<p className="font-bold uppercase text-lg">{sticker.address}</p>
 					</div>
-					<div className="flex gap-1 col-span-3 md:col-span-2 items-center">
+					<div className="flex gap-1 col-span-3 md:col-span-2 items-center capitalize">
 						<FaUserAlt />
 						<p>{sticker.nameReceiver}</p>
 					</div>
@@ -128,7 +128,7 @@ export const StickerCard = ({
 					<div
 						className="flex justify-center cursor-pointer gap-1 border-2 rounded-md w-full border-red-500 text-red-500 hover:bg-red-500 hover:text-white transition-all p-1 col-span-3 items-center"
 						onClick={() => {
-							removeSticker([sticker]);
+							deleteSticker(sticker);
 						}}
 					>
 						<BsTrashFill className="text-lg" />

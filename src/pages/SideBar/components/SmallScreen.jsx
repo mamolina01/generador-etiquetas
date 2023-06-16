@@ -30,6 +30,18 @@ export const SmallScreen = ({ profile, setLogout }) => {
 				/>
 				<div
 					className={`text-white w-full font-semibold p-2 text-xl
+						${
+							location === "/profile" ? "bg-zinc-700" : ""
+						} hover:bg-zinc-700 w-full text-center`}
+				>
+					<Link to="/profile">
+						<button className="w-full" onClick={() => setShowMenu(false)}>
+							Mi Perfil
+						</button>
+					</Link>
+				</div>
+				<div
+					className={`text-white w-full font-semibold p-2 text-xl
 						${location === "/" ? "bg-zinc-700" : ""} hover:bg-zinc-700 w-full text-center`}
 				>
 					<Link to="/">

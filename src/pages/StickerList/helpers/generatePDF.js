@@ -1,37 +1,46 @@
 import html2pdf from "html2pdf.js";
 import { getActualDate } from "../../../helpers/getActualDate";
+import { et } from "date-fns/locale";
 
 export const generatePDF = async (etiquetas, headerParams) => {
+	let tempEtiquetas = [];
+	for (let etiqueta of etiquetas) {
+		tempEtiquetas.push({
+			Direccion: etiqueta.address,
+			"Entre calles": etiqueta.betweenStreets,
+			Barrio: etiqueta.neighborhood,
+			"Nombre destinatario": etiqueta.nameReceiver,
+			Telefono: etiqueta.telephone,
+			Fecha: etiqueta.date,
+			Observaciones: etiqueta.observations,
+		});
+	}
+
 	// Contenido HTML del template
-	const template = await generateTemplate(etiquetas, headerParams);
+	try {
+		const template = await generateTemplate(tempEtiquetas, headerParams);
+		// Opciones para la generación del PDF
+		const opciones = {
+			margin: 0,
+			filename: `etiquetas ${getActualDate()}.pdf`,
+			image: { type: "jpeg", quality: 1 },
+			pagebreak: { mode: "avoid-all", before: "#page2el" },
+			html2canvas: { scale: 2 },
+			jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
+		};
 
-	// Opciones para la generación del PDF
-	const opciones = {
-		margin: 0,
-		filename: `etiquetas ${getActualDate()}.pdf`,
-		image: { type: "jpeg", quality: 1 },
-		pagebreak: { mode: "avoid-all", before: "#page2el" },
-		html2canvas: { scale: 2 },
-		jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
-	};
-
-	// Genera el PDF
-	html2pdf().from(template).set(opciones).save();
+		// Genera el PDF
+		html2pdf().from(template).set(opciones).save();
+	} catch (error) {
+		console.log(error);
+	}
 };
 
 const generateTemplate = (etiquetas, headerParams) =>
 	new Promise((resolve) => {
-		const preloadLink = document.createElement("link");
-		preloadLink.href = headerParams.logo;
-		preloadLink.rel = "preload";
-		preloadLink.as = "script";
-
 		const html = document.createElement("html");
 		html.style.maxWidth = "100%";
 		html.style.minHeight = "1120px";
-		const head = document.createElement("head");
-		head.appendChild(preloadLink);
-		html.appendChild(head);
 
 		const body = document.createElement("body");
 		body.style.padding = "0.2em";
@@ -69,7 +78,7 @@ const generateTemplate = (etiquetas, headerParams) =>
 				img.alt = "logo empresa";
 				img.style.position = "center";
 				img.style.borderRadius = "50%";
-				const urlImage = fetch(headerParams.logo)
+				fetch(headerParams.logo)
 					.then((response) => response.arrayBuffer())
 					.then((buffer) => {
 						const base64 = btoa(
@@ -131,7 +140,7 @@ const generateTemplate = (etiquetas, headerParams) =>
 						h1.style.fontWeight = "600";
 						h1.style.textTransform = "uppercase";
 
-						h1.innerHTML = item === "entreCalles" ? "entre calles" : item;
+						h1.innerHTML = item;
 						const divH3 = document.createElement("div");
 						divH3.style.width = "100%";
 						divH3.style.borderBottom = "1px solid black";
@@ -155,11 +164,6 @@ const generateTemplate = (etiquetas, headerParams) =>
 			}
 		}
 		html.appendChild(body);
-		const imagen =
-			html.children[1].children[0].children[0].children[0].children[0]
-				.children[0];
 
-		imagen.addEventListener("load", function () {
-			setTimeout(resolve, 1000, html);
-		});
+		setTimeout(resolve, 1000, html);
 	});

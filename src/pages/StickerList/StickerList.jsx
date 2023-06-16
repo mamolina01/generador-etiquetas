@@ -3,11 +3,15 @@ import { StickerContext } from "../../context";
 import { StickerCard, StickerAdvice } from "./components";
 
 import { generatePDF } from "./helpers/generatePDF";
-import { BsFillCheckSquareFill, BsPrinterFill, BsTrashFill } from "react-icons/bs";
+import {
+	BsFillCheckSquareFill,
+	BsPrinterFill,
+	BsTrashFill,
+} from "react-icons/bs";
 import { ImCheckboxUnchecked } from "react-icons/im";
 
 export const StickerList = () => {
-	const { stickers, user, removeSticker } = useContext(StickerContext);
+	const { stickers, profile, removeSticker } = useContext(StickerContext);
 	const [selected, setSelected] = useState([]);
 	const checkedAllInputRef = useRef(null);
 
@@ -34,7 +38,7 @@ export const StickerList = () => {
 	};
 
 	const handlePrint = () => {
-		generatePDF(selected, user);
+		generatePDF(selected, profile);
 	};
 
 	return (

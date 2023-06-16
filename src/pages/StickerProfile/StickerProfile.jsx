@@ -1,12 +1,15 @@
-import React, { useContext, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { useAuthenthicated, useForm } from "../../hooks";
 import { StickerContext } from "../../context";
 import { uploadFile } from "./helpers";
 import { InputImage } from "./components";
+import { useLocation } from "react-router-dom";
+import { validateFiles } from "../../helpers";
 
 export const StickerProfile = () => {
-	const { setProfile, profile } = useContext(StickerContext);
+	const { setProfile, profile, isLogged } = useContext(StickerContext);
 	const { startSetProfile } = useAuthenthicated();
+	const location = useLocation().pathname;
 
 	const { formState, isFormValid, onInputChange, setFormState, resetForm } =
 		useForm({
@@ -23,6 +26,12 @@ export const StickerProfile = () => {
 			logo: image,
 		});
 	};
+
+	useEffect(() => {
+		if (validateFiles(profile, isLogged)) {
+			setFormState(profile);
+		}
+	}, []);
 
 	const handleSubmit = async () => {
 		const validation = isFormValid();
@@ -45,7 +54,7 @@ export const StickerProfile = () => {
 	return (
 		<>
 			<div className=" w-full h-screen overflow-auto scroll-auto">
-				<div className="flex flex-col justify-center scroll-auto mx-auto w-11/12 md:w-1/2 animate__animated animate__fadeIn animate__faster">
+				<div className="flex flex-col justify-center scroll-auto py-3 mx-auto w-11/12 md:w-1/2 animate__animated animate__fadeIn animate__faster">
 					<h1 className="text-center text-indigo-700 font-bold text-3xl p-2 uppercase">
 						Datos a completar
 					</h1>

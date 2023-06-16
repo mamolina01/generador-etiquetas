@@ -17,9 +17,18 @@ export const LargeScreen = ({ profile, setLogout }) => {
 					</Link>
 				</div>
 				<p className="mt-2 mb-5 capitalize">{profile.name}</p>
-				<Link to="/">
+				<Link to="/profile">
 					<p
 						className={`p-3 cursor-pointer border-y-2 border-zinc-500 whitespace-nowrap transition-all hover:bg-zinc-700 ${
+							location === "/profile" ? "bg-zinc-700" : ""
+						}`}
+					>
+						Mi Perfil
+					</p>
+				</Link>
+				<Link to="/">
+					<p
+						className={`p-3 cursor-pointer whitespace-nowrap transition-all hover:bg-zinc-700 ${
 							location === "/" ? "bg-zinc-700" : ""
 						}`}
 					>
@@ -28,7 +37,7 @@ export const LargeScreen = ({ profile, setLogout }) => {
 				</Link>
 				<Link to="/generate">
 					<p
-						className={`p-3 cursor-pointer border-b-2 border-zinc-500 whitespace-nowrap transition-all hover:bg-zinc-700 ${
+						className={`p-3 cursor-pointer border-y-2 border-zinc-500 whitespace-nowrap transition-all hover:bg-zinc-700 ${
 							location === "/generate" ? "bg-zinc-700" : ""
 						}`}
 					>

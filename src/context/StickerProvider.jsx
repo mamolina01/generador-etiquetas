@@ -98,6 +98,7 @@ export const StickerProvider = ({ children }) => {
 				setIsLogged,
 				setUser,
 				addSticker,
+				setStickers,
 				removeSticker,
 				editSticker,
 				setLogout,

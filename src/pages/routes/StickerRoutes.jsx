@@ -7,14 +7,20 @@ import {
 import { StickerGenerator, StickerList, StickerProfile } from "../";
 import { SideBar } from "../SideBar";
 import { validateFiles } from "../../helpers";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { StickerContext } from "../../context";
+import { useManageStickers } from "../../hooks";
 
 export const StickerRoutes = () => {
 	const { profile } = useContext(StickerContext);
+	const { getStickers } = useManageStickers();
+
+	useEffect(() => {
+		getStickers();
+	}, []);
 
 	return (
-		<div className="flex flex-col md:flex-row">
+		<div className="flex flex-col lg:flex-row">
 			{validateFiles(profile) ? (
 				<>
 					<SideBar />
@@ -24,7 +30,8 @@ export const StickerRoutes = () => {
 							path="/generate/:stickerId?"
 							element={<StickerGenerator />}
 						/>
-            
+						<Route path="/profile" element={<StickerProfile />} />
+
 						<Route path="/*" element={<Navigate to="/" />} />
 					</Routes>
 				</>

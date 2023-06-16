@@ -4,15 +4,15 @@ import { HeaderSticker } from "./HeaderSticker";
 import { StickerContext } from "../../../context";
 import { getActualDate } from "../../../helpers";
 import Swal from "sweetalert2";
-import { useNavigate } from "react-router-dom";
 import { useManageStickers } from "../../../hooks";
+import { useNavigate } from "react-router-dom";
 
 export const FormSticker = ({ stickerToEdit }) => {
 	const inputRef = useRef(null);
 	const { addSticker, editSticker, profile } = useContext(StickerContext);
-	const { saveSticker } = useManageStickers();
-
+	const { saveSticker, updateSticker } = useManageStickers();
 	const navigate = useNavigate();
+
 	const [error, setError] = useState(false);
 	const { formState, isFormValid, onInputChange, setFormState, resetForm } =
 		useForm({
@@ -29,7 +29,7 @@ export const FormSticker = ({ stickerToEdit }) => {
 		// const exists = stickers.filter((sticker) => sticker.id === stickerId);
 		if (stickerToEdit.length !== 0) {
 			setFormState(stickerToEdit[0]);
-		} 
+		}
 		// else {
 		// 	resetForm();
 		// }
@@ -42,26 +42,17 @@ export const FormSticker = ({ stickerToEdit }) => {
 			return;
 		}
 
-		Swal.fire({
-			icon: "success",
-			title: "Etiqueta guardada",
-			text: "Disponible en Mis Etiquetas",
-			showConfirmButton: false,
-			timer: 1500,
-			returnFocus: false,
-		});
+		if (formState.id) {
+			let message = await updateSticker(formState);
+			setError(message);
+			!message && navigate("/");
+		} else {
+			let message = await saveSticker(formState);
+			setError(message);
+		}
 
-		// if (formState._id) {
-		// 	editSticker(formState);
-		// 	navigate("/");
-		// } else {
-		// 	addSticker(formState);
-		// }
-		const message = await saveSticker(formState);
-		setError(message);
-
-		// resetForm();
-		// inputRef.current.focus();
+		resetForm();
+		inputRef.current.focus();
 	};
 	return (
 		<>
