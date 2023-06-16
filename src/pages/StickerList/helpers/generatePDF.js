@@ -1,6 +1,5 @@
 import html2pdf from "html2pdf.js";
 import { getActualDate } from "../../../helpers/getActualDate";
-import { et } from "date-fns/locale";
 
 export const generatePDF = async (etiquetas, headerParams) => {
 	let tempEtiquetas = [];
