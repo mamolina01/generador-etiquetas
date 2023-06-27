@@ -7,7 +7,7 @@ import { useLocation } from "react-router-dom";
 import { validateFiles } from "../../helpers";
 
 export const StickerProfile = () => {
-  const { setProfile, profile, isLogged } = useContext(StickerContext);
+  const { setProfile, profile, user, isLogged } = useContext(StickerContext);
   const { startSetProfile, updateProfile } = useAuthenthicated();
   const location = useLocation().pathname;
 
@@ -15,7 +15,7 @@ export const StickerProfile = () => {
     useForm({
       instagram: "",
       whatsapp: "",
-      logo: [],
+      logo: "",
     });
 
   const [error, setError] = useState(false);
@@ -27,7 +27,6 @@ export const StickerProfile = () => {
     });
   };
 
-  console.log(profile)
   useEffect(() => {
     if (validateFiles(profile, isLogged)) {
       setFormState(profile);
@@ -41,20 +40,19 @@ export const StickerProfile = () => {
       return;
     }
 
+    let message = "";
+    const urlLogo = await uploadFile(formState.logo);
+    formState.logo = urlLogo;
+    
+
     if (validateFiles(profile, isLogged)) {
-      const message = await updateProfile(formState);
+      message = await updateProfile(formState, user.id);
     } else {
-      const urlLogo = await uploadFile(formState.logo);
-
-      formState.logo = urlLogo;
       formState.name = profile.name;
-      const message = await startSetProfile(formState);
+      message = await startSetProfile(formState);
     }
-
-    console.log(message);
     setError(message);
 
-    // resetForm();
   };
 
   return (

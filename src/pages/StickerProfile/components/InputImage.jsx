@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
-import { BsFillCloudArrowUpFill } from "react-icons/bs";
+import { FcAddImage } from "react-icons/fc";
 
 export const InputImage = ({ onFileInputChange, logo }) => {
   const { getRootProps, getInputProps } = useDropzone({
@@ -11,7 +11,7 @@ export const InputImage = ({ onFileInputChange, logo }) => {
       onFileInputChange(
         Object.assign(acceptedFiles[0], {
           preview: URL.createObjectURL(acceptedFiles[0]),
-        }),
+        })
       );
     },
     maxFiles: 1,
@@ -29,7 +29,10 @@ export const InputImage = ({ onFileInputChange, logo }) => {
         <>
           <div className="w-fit mx-auto flex flex-col justify-center gap-2">
             <div className=" mx-auto w-fit p-1 border-2 border-zinc-200">
-              <img src={logo?.preview?logo?.preview:logo} className="w-28 h-28 object-cover" />
+              <img
+                src={logo?.preview ? logo?.preview : logo}
+                className="w-28 h-28 object-cover"
+              />
             </div>
             <p
               onClick={() => onFileInputChange("")}
@@ -46,7 +49,7 @@ export const InputImage = ({ onFileInputChange, logo }) => {
             className="flex flex-col items-center gap-1 p-2 border-dashed border-2 border-zinc-400 rounded-md w-full py-2 cursor-pointer"
           >
             <input {...getInputProps()} />
-            <BsFillCloudArrowUpFill size="3em" className=" text-zinc-600" />
+            <FcAddImage size="6em" />
             <p className=" text-zinc-600 text-lg text-center">
               Arrastra un archivo o haz click para buscar
             </p>
@@ -57,3 +60,4 @@ export const InputImage = ({ onFileInputChange, logo }) => {
     </>
   );
 };
+
