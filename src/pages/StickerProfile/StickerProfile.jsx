@@ -3,13 +3,14 @@ import { useAuthenthicated, useForm } from "../../hooks";
 import { StickerContext } from "../../context";
 import { uploadFile } from "./helpers";
 import { InputImage } from "./components";
-import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { validateFiles } from "../../helpers";
 
 export const StickerProfile = () => {
-  const { setProfile, profile, user, isLogged } = useContext(StickerContext);
+  const { profile, user, isLogged } = useContext(StickerContext);
   const { startSetProfile, updateProfile } = useAuthenthicated();
-  const location = useLocation().pathname;
+  const navigate = useNavigate();
+
 
   const { formState, isFormValid, onInputChange, setFormState, resetForm } =
     useForm({
@@ -50,6 +51,7 @@ export const StickerProfile = () => {
     } else {
       formState.name = profile.name;
       message = await startSetProfile(formState);
+      !message && navigate("/");
     }
     setError(message);
 
@@ -58,8 +60,8 @@ export const StickerProfile = () => {
   return (
     <>
       <div className=" w-full h-screen overflow-auto scroll-auto">
-        <div className="flex flex-col justify-center scroll-auto py-3 mx-auto w-11/12 md:w-1/2 animate__animated animate__fadeIn animate__faster">
-          <h1 className="text-center text-indigo-700 font-bold text-3xl p-2 uppercase">
+        <div className="flex flex-col justify-center scroll-auto py-3 mx-auto w-10/12 md:w-1/2 animate__animated animate__fadeIn animate__faster">
+          <h1 className="text-center text-indigo-700 font-bold text-xl lg:text-3xl p-2 uppercase">
             Datos a completar
           </h1>
           <div className="w-full mx-auto p-5 my-5 flex flex-col gap-2 bg-white rounded-md shadow-md shadow-stone-400">

@@ -1,15 +1,13 @@
 import { useContext, useEffect, useRef, useState } from "react";
-import { useForm } from "../../../hooks";
 import { HeaderSticker } from "./HeaderSticker";
 import { StickerContext } from "../../../context";
 import { getActualDate } from "../../../helpers";
-import Swal from "sweetalert2";
-import { useManageStickers } from "../../../hooks";
+import { useManageStickers, useForm } from "../../../hooks";
 import { useNavigate } from "react-router-dom";
 
 export const FormSticker = ({ stickerToEdit }) => {
 	const inputRef = useRef(null);
-	const { addSticker, editSticker, profile } = useContext(StickerContext);
+	const { profile } = useContext(StickerContext);
 	const { saveSticker, updateSticker } = useManageStickers();
 	const navigate = useNavigate();
 
@@ -49,9 +47,10 @@ export const FormSticker = ({ stickerToEdit }) => {
 		} else {
 			let message = await saveSticker(formState);
 			setError(message);
+			if (message) return;
 		}
 
-		// resetForm();
+		resetForm();
 		inputRef.current.focus();
 	};
 	return (

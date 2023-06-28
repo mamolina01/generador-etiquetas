@@ -8,7 +8,7 @@ export const SmallScreen = ({ profile, setLogout }) => {
 
 	return (
 		<>
-			<div className="w-full sticky bg-zinc-800 p-2 z-20 flex lg:hidden justify-between items-center">
+			<div className="w-full sticky bg-zinc-800 p-2 z-20 flex lg:hidden justify-between items-center" id="navbar">
 				<div onClick={() => setShowMenu(!showMenu)}>
 					<AiOutlineMenu className="text-white text-3xl " />
 				</div>

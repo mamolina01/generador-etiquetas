@@ -1,10 +1,10 @@
 import { useContext } from "react";
 import { StickerContext } from "../context";
 import Swal from "sweetalert2";
+import stickerApi from "../api/stickerApi";
 
 export const useAuthenthicated = () => {
-	const { setUser, setProfile, setIsLogged, setLogout } =
-		useContext(StickerContext);
+	const { setUser, setProfile, setIsLogged } = useContext(StickerContext);
 
 	const startLogin = async ({ email, password }) => {
 		try {
@@ -18,10 +18,7 @@ export const useAuthenthicated = () => {
 			localStorage.setItem("token-init-date", new Date().getTime());
 
 			try {
-				const { data: dataLogin } = await stickerApi.get(`/auth`, {
-					email,
-					password,
-				});
+				const { data: dataLogin } = await stickerApi.get(`/profile`);
 
 				if (!dataLogin.ok) {
 					setProfile({ name: data.name });
@@ -31,7 +28,7 @@ export const useAuthenthicated = () => {
 				}
 			} catch (error) {
 				console.log(error);
-				return error?.msg || "--";
+				return error?.msg || "CONTACTESE CON EL ADMINISTRADOR";
 			}
 			const user = {
 				email,
@@ -41,7 +38,7 @@ export const useAuthenthicated = () => {
 			setIsLogged(true);
 		} catch (error) {
 			console.log(error);
-			return error?.msg || "--";
+			return error?.msg || "CONTACTESE CON EL ADMINISTRADOR";
 		}
 	};
 
@@ -68,59 +65,45 @@ export const useAuthenthicated = () => {
 			return false;
 		} catch (error) {
 			console.log(error);
-			return error?.msg || "--";
+			return error?.msg || "CONTACTESE CON EL ADMINISTRADOR";
 		}
 	};
 
 	const startSetProfile = async ({ logo, instagram, whatsapp, name }) => {
-		const token = localStorage.getItem("token") ?? "";
 		try {
-      const { data: dataProfile } = await stickerApi.get(`/auth`, {
-        email,
-        password,
-      });
-			const response = await fetch("http://localhost:4000/api/profile", {
-				method: "POST",
-				body: JSON.stringify({ name, logo, instagram, whatsapp }),
-				headers: {
-					"Content-type": "application/json; charset=UTF-8",
-					"x-token": token,
-				},
-			})
-				.then((response) => response.json())
-				.then((json) => json);
+			const { data } = await stickerApi.post(`/profile`, {
+				name,
+				logo,
+				instagram,
+				whatsapp,
+			});
 
-			if (!response.ok) {
-				return response.msg;
+			if (!data.ok) {
+				return data.msg;
 			}
-			setProfile(response.data);
+			setProfile(data.data);
 			return false;
 		} catch (error) {
 			console.log(error);
-			return error?.msg || "--";
+			return error?.msg || "CONTACTESE CON EL ADMINISTRADOR";
 		}
 	};
 
-	const updateProfile = async (sticker, id) => {
-		const token = localStorage.getItem("token") ?? "";
+	const updateProfile = async (sticker) => {
 
 		const { logo, instagram, whatsapp, name } = sticker;
 		try {
-			const response = await fetch(`http://localhost:4000/api/profile`, {
-				method: "PUT",
-				body: JSON.stringify({ name, logo, instagram, whatsapp }),
-				headers: {
-					"Content-type": "application/json; charset=UTF-8",
-					"x-token": token,
-				},
-			})
-				.then((response) => response.json())
-				.then((json) => json);
+			const { data } = await stickerApi.put(`/profile`, {
+				name,
+				logo,
+				instagram,
+				whatsapp,
+			});
 
-			if (!response.ok) {
-				return response.msg;
+			if (!data.ok) {
+				return data.msg;
 			}
-			setProfile(response.data);
+			setProfile(data.data);
 
 			Swal.fire({
 				icon: "success",
@@ -132,7 +115,7 @@ export const useAuthenthicated = () => {
 			return false;
 		} catch (error) {
 			console.log(error);
-			return error?.msg || "--";
+			return error?.msg || "CONTACTESE CON EL ADMINISTRADOR";
 		}
 	};
 

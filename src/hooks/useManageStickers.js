@@ -1,8 +1,9 @@
 import { useContext } from "react";
 import { StickerContext } from "../context";
 import Swal from "sweetalert2";
-import { getDateParsed } from "../helpers/getDateParsed";
 import stickerApi from "../api/stickerApi";
+import { getDateParsed } from "../helpers/getDateParsed";
+import { animateScroll as scroll } from "react-scroll";
 
 export const useManageStickers = () => {
 	const { addSticker, setStickers, removeSticker, editSticker } =
@@ -21,7 +22,7 @@ export const useManageStickers = () => {
 			let tempData = newSticker;
 			tempData.date = getDateParsed(tempData.date);
 			addSticker(tempData);
-			Swal.fire({
+			await Swal.fire({
 				icon: "success",
 				title: "Etiqueta guardada",
 				text: "Disponible en Mis Etiquetas",
@@ -29,10 +30,12 @@ export const useManageStickers = () => {
 				timer: 1500,
 				returnFocus: false,
 			});
+			scroll.scrollToTop();
+
 			return false;
 		} catch (error) {
 			console.log(error);
-			return error?.msg || "--";
+			return error?.msg || "CONTACTESE CON EL ADMINISTRADOR";
 		}
 	};
 	const getStickers = async () => {
@@ -51,7 +54,7 @@ export const useManageStickers = () => {
 			return false;
 		} catch (error) {
 			console.log(error);
-			return error?.msg || "--";
+			return error?.msg || "CONTACTESE CON EL ADMINISTRADOR";
 		}
 	};
 
@@ -77,7 +80,7 @@ export const useManageStickers = () => {
 			return false;
 		} catch (error) {
 			console.log(error);
-			return error?.msg || "--";
+			return error?.msg || "CONTACTESE CON EL ADMINISTRADOR";
 		}
 	};
 
@@ -102,7 +105,7 @@ export const useManageStickers = () => {
 			return false;
 		} catch (error) {
 			console.log(error);
-			return error?.msg || "--";
+			return error?.msg || "CONTACTESE CON EL ADMINISTRADOR";
 		}
 	};
 

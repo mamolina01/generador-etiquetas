@@ -44,8 +44,8 @@ export const StickerList = () => {
 	return (
 		<>
 			<div className=" w-full h-screen overflow-auto scroll-auto">
-				<div className="flex flex-col justify-center scroll-auto py-3 mx-auto w-11/12 lg:w-1/2 animate__animated animate__fadeIn animate__faster">
-					<h1 className="text-center text-indigo-700 font-bold text-3xl p-2 uppercase">
+				<div className="flex flex-col justify-center scroll-auto py-3 mx-auto w-10/12 md:w-1/2 animate__animated animate__fadeIn animate__faster">
+					<h1 className="text-center text-indigo-700 font-bold text-xl lg:text-3xl p-2 uppercase">
 						Mis Etiquetas
 					</h1>
 
@@ -61,7 +61,7 @@ export const StickerList = () => {
 							<div
 								className={`${
 									!checkedAllInputRef.current?.checked
-										? "cursor-pointer text-lg text-indigo-600"
+										? "cursor-pointer text-sm lg:text-lg text-indigo-600"
 										: "hidden"
 								}`}
 							>
@@ -72,7 +72,7 @@ export const StickerList = () => {
 							<div
 								className={`${
 									checkedAllInputRef.current?.checked
-										? "cursor-pointer text-lg text-indigo-600"
+										? "cursor-pointer text-sm lg:text-lg text-indigo-600"
 										: "hidden"
 								}`}
 							>
@@ -80,27 +80,30 @@ export const StickerList = () => {
 									onClick={() => checkedAllInputRef.current.click()}
 								/>
 							</div>
-							<label htmlFor="selectAll" className="cursor-pointer">
+							<label
+								htmlFor="selectAll"
+								className="cursor-pointer text-sm lg:text-base"
+							>
 								Seleccionar Todos
 							</label>
 						</div>
 
 						<div className="flex gap-2">
 							<button
-								className="flex items-center gap-1 bg-indigo-600 text-white p-1 rounded-sm font-semibold transition-all hover:bg-indigo-700 disabled:bg-indigo-400 disabled:cursor-not-allowed"
+								className="flex items-center gap-1 bg-indigo-600 text-white text-sm lg:text-base p-1 rounded-sm font-semibold transition-all hover:bg-indigo-700 disabled:bg-indigo-400 disabled:cursor-not-allowed"
 								disabled={selected.length === 0}
 								onClick={() => handlePrint()}
 							>
 								<BsPrinterFill />
-								Imprimir
+								<p>Imprimir</p>
 							</button>
 							<button
-								className="flex items-center gap-1 bg-red-500 text-white p-1 rounded-sm font-semibold transition-all hover:bg-red-700 disabled:bg-red-300 disabled:cursor-not-allowed"
+								className="flex items-center gap-1 bg-red-500 text-white text-sm lg:text-base p-1 rounded-sm font-semibold transition-all hover:bg-red-700 disabled:bg-red-300 disabled:cursor-not-allowed"
 								disabled={selected.length === 0}
 								onClick={() => removeSticker(selected)}
 							>
 								<BsTrashFill />
-								Eliminar
+								<p>Eliminar</p>
 							</button>
 						</div>
 					</div>

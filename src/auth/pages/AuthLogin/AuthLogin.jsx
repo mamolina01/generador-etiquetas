@@ -2,12 +2,9 @@ import React from "react";
 import { useState } from "react";
 import { useAuthenthicated, useForm } from "../../../hooks";
 import { Link } from "react-router-dom";
-import { useContext } from "react";
-import { StickerContext } from "../../../context";
 
 export const AuthLogin = () => {
 	const [error, setError] = useState(false);
-	const { setUser, setProfile, setIsLogged } = useContext(StickerContext);
 	const { startLogin } = useAuthenthicated();
 
 	const { formState, isFormValid, onInputChange, setFormState, resetForm } =
@@ -25,15 +22,7 @@ export const AuthLogin = () => {
 
 		const message = await startLogin(formState);
 		setError(message);
-		// setUser({ email: formState.email });
-		// setProfile({
-		//   instagram: "eravirtual_",
-		//   whatsapp: "112233",
-		//   logo: "logo.png",
-		// });
-		// setIsLogged(true);
 
-		// resetForm();
 	};
 	return (
 		<>

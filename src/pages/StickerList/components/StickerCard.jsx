@@ -72,11 +72,11 @@ export const StickerCard = ({
 				<div
 					className={`grid grid-cols-6 gap-1 transition-all auto-cols-auto ease-in-out duration-900 w-full`}
 				>
-					<div className=" col-span-6 flex items-center">
+					<div className=" col-span-6 flex items-center text-base md:text-lg">
 						<MdLocationPin />
-						<p className="font-bold uppercase text-lg">{sticker.address}</p>
+						<p className="font-bold uppercase ">{sticker.address}</p>
 					</div>
-					<div className="flex gap-1 col-span-3 md:col-span-2 items-center capitalize">
+					<div className="flex gap-1 col-span-3 md:col-span-2 items-center capitalize ">
 						<FaUserAlt />
 						<p>{sticker.nameReceiver}</p>
 					</div>
@@ -121,8 +121,8 @@ export const StickerCard = ({
 							to={`/generate/${sticker.id}`}
 							className="flex w-full h-full justify-center items-center"
 						>
-							<BiEdit className="text-lg" />
-							<p className="text-sm uppercase font-semibold">Modificar</p>
+							<BiEdit className="text-base lg:text-lg" />
+							<p className="text-xs lg:text-sm uppercase font-semibold">Modificar</p>
 						</Link>
 					</div>
 					<div
@@ -131,8 +131,8 @@ export const StickerCard = ({
 							deleteSticker(sticker);
 						}}
 					>
-						<BsTrashFill className="text-lg" />
-						<p className="text-sm uppercase font-semibold">Eliminar</p>
+						<BsTrashFill className="text-base lg:text-lg" />
+						<p className="text-xs lg:text-sm uppercase font-semibold">Eliminar</p>
 					</div>
 				</div>
 				<div
