@@ -1,110 +1,110 @@
 import React, { useEffect, useState } from "react";
 import { StickerContext } from "./StickerContext";
+import stickerApi from "../api/stickerApi";
 
 export const StickerProvider = ({ children }) => {
-	const [user, setUser] = useState(
-		JSON.parse(localStorage.getItem("user")) ?? {}
-	);
 
-	const [profile, setProfile] = useState(
-		JSON.parse(localStorage.getItem("profile")) ?? {}
-	);
-	const [isLogged, setIsLogged] = useState(
-		JSON.parse(localStorage.getItem("isLogged")) ?? false
-	);
+  const [user, setUser] = useState(
+    JSON.parse(localStorage.getItem("user")) ?? {}
+  );
 
-	const [stickers, setStickers] = useState(
-		JSON.parse(localStorage.getItem("stickers")) ?? []
-	);
+  const [profile, setProfile] = useState(
+    JSON.parse(localStorage.getItem("profile")) ?? {}
+  );
+  const [isLogged, setIsLogged] = useState(
+    JSON.parse(localStorage.getItem("isLogged")) ?? false
+  );
 
-	const setLogout = () => {
-		setUser({});
-		setProfile({});
-		setStickers([]);
-		setIsLogged(false);
-	};
+  const [stickers, setStickers] = useState(
+    JSON.parse(localStorage.getItem("stickers")) ?? []
+  );
+  
 
-	const addSticker = (newSticker) => {
-		setStickers([...stickers, newSticker]);
-	};
+  const setLogout = () => {
+    setUser({});
+    setProfile({});
+    setStickers([]);
+    setIsLogged(false);
+  };
 
-	const removeSticker = (stickerToRemove) => {
-		let temp = stickers;
-		stickerToRemove.map(
-			(sticker) => (temp = temp.filter((item) => item.id !== sticker.id))
-		);
+  const addSticker = (newSticker) => {
+    setStickers([...stickers, newSticker]);
+  };
 
-		setStickers(temp);
-	};
+  const removeSticker = (stickerToRemove) => {
+    let temp = stickers;
+    stickerToRemove.map(
+      (sticker) => (temp = temp.filter((item) => item.id !== sticker.id))
+    );
 
-	const editSticker = (stickerToEdit) => {
-		const tempStickers = stickers.map((item) =>
-			item.id === stickerToEdit.id ? stickerToEdit : item
-		);
-		setStickers(tempStickers);
-	};
+    setStickers(temp);
+  };
 
-	const checkAuthToken = async () => {
-		const token = localStorage.getItem("token");
-		if (!token) return setLogout();
+  const editSticker = (stickerToEdit) => {
+    const tempStickers = stickers.map((item) =>
+      item.id === stickerToEdit.id ? stickerToEdit : item
+    );
+    setStickers(tempStickers);
+  };
 
-		try {
-			const data = await fetch("auth/renew", {
-				headers: {
-					"Content-type": "application/json; charset=UTF-8",
-					"x-token": token,
-				},
-			});
-			localStorage.setItem("token", data.token);
-			localStorage.setItem("token-init-date", new Date().getTime());
-		} catch (error) {
-			console.log(error);
-			localStorage.clear();
-			setLogout();
-		}
-	};
+  const checkAuthToken = async () => {
+    const token = localStorage.getItem("token");
+    if (!token) return setLogout();
 
-	useEffect(() => {
-		checkAuthToken();
-	}, []);
+    try {
+      const { data } = await stickerApi.get(`/auth/renew`);
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("token-init-date", new Date().getTime());
+      setProfile({ ...profile, name: data.name });
+      // setUser({ ...user, id: data.uid });
+    } catch (error) {
+      console.log(error);
+      localStorage.clear();
+      setLogout();
+    }
+  };
 
-	useEffect(() => {
-		localStorage.setItem("stickers", JSON.stringify(stickers));
-	}, [stickers]);
+  useEffect(() => {
+    checkAuthToken();
+  }, []);
 
-	useEffect(() => {
-		localStorage.setItem("user", JSON.stringify(user));
-	}, [user]);
+  useEffect(() => {
+    localStorage.setItem("stickers", JSON.stringify(stickers));
+  }, [stickers]);
 
-	useEffect(() => {
-		localStorage.setItem("profile", JSON.stringify(profile));
-	}, [profile]);
+  useEffect(() => {
+    localStorage.setItem("user", JSON.stringify(user));
+  }, [user]);
 
-	useEffect(() => {
-		localStorage.setItem("isLogged", JSON.stringify(isLogged));
-	}, [isLogged]);
+  useEffect(() => {
+    localStorage.setItem("profile", JSON.stringify(profile));
+  }, [profile]);
 
-	return (
-		<StickerContext.Provider
-			value={{
-				//Properties
-				stickers,
-				user,
-				isLogged,
-				profile,
+  useEffect(() => {
+    localStorage.setItem("isLogged", JSON.stringify(isLogged));
+  }, [isLogged]);
 
-				//Methods
-				setProfile,
-				setIsLogged,
-				setUser,
-				addSticker,
-				setStickers,
-				removeSticker,
-				editSticker,
-				setLogout,
-			}}
-		>
-			{children}
-		</StickerContext.Provider>
-	);
+  return (
+    <StickerContext.Provider
+      value={{
+        //Properties
+        stickers,
+        user,
+        isLogged,
+        profile,
+
+        //Methods
+        setProfile,
+        setIsLogged,
+        setUser,
+        addSticker,
+        setStickers,
+        removeSticker,
+        editSticker,
+        setLogout,
+      }}
+    >
+      {children}
+    </StickerContext.Provider>
+  );
 };
