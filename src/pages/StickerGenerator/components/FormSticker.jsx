@@ -51,7 +51,7 @@ export const FormSticker = ({ stickerToEdit }) => {
 			setError(message);
 		}
 
-		resetForm();
+		// resetForm();
 		inputRef.current.focus();
 	};
 	return (

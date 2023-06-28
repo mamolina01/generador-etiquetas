@@ -2,32 +2,23 @@ import { useContext } from "react";
 import { StickerContext } from "../context";
 import Swal from "sweetalert2";
 import { getDateParsed } from "../helpers/getDateParsed";
+import stickerApi from "../api/stickerApi";
 
 export const useManageStickers = () => {
 	const { addSticker, setStickers, removeSticker, editSticker } =
 		useContext(StickerContext);
 
 	const saveSticker = async (sticker) => {
-		const token = localStorage.getItem("token") ?? "";
 		try {
-			const response = await fetch("http://localhost:4000/api/stickers", {
-				method: "POST",
-				body: JSON.stringify(sticker),
-				headers: {
-					"Content-type": "application/json; charset=UTF-8",
-					"x-token": token,
-				},
-			})
-				.then((response) => response.json())
-				.then((json) => json);
+			const { data } = await stickerApi.post(`/stickers`, sticker);
 
-			if (!response.ok) {
-				console.log(response);
-				return response.msg;
+			if (!data.ok) {
+				console.log(data);
+				return data.msg;
 			}
 
-			const { data } = response;
-			let tempData = data;
+			const { data: newSticker } = data;
+			let tempData = newSticker;
 			tempData.date = getDateParsed(tempData.date);
 			addSticker(tempData);
 			Swal.fire({
@@ -45,24 +36,16 @@ export const useManageStickers = () => {
 		}
 	};
 	const getStickers = async () => {
-		const token = localStorage.getItem("token") ?? "";
 		try {
-			const response = await fetch("http://localhost:4000/api/stickers", {
-				headers: {
-					"Content-type": "application/json; charset=UTF-8",
-					"x-token": token,
-				},
-			})
-				.then((response) => response.json())
-				.then((json) => json);
+			const { data } = await stickerApi.get("/stickers");
 
-			if (!response.ok) {
-				console.log(response);
-				return response.msg;
+			if (!data.ok) {
+				console.log(data);
+				return data.msg;
 			}
 
-			const { data } = response;
-			let tempData = data;
+			const { data: stickers } = data;
+			let tempData = stickers;
 			tempData.map((sticker) => (sticker.date = getDateParsed(sticker.date)));
 			setStickers(tempData);
 			return false;
@@ -73,24 +56,12 @@ export const useManageStickers = () => {
 	};
 
 	const deleteSticker = async (sticker) => {
-		const token = localStorage.getItem("token") ?? "";
 		try {
-			const response = await fetch(
-				`http://localhost:4000/api/stickers/${sticker.id}`,
-				{
-					method: "DELETE",
-					headers: {
-						"Content-type": "application/json; charset=UTF-8",
-						"x-token": token,
-					},
-				}
-			)
-				.then((response) => response.json())
-				.then((json) => json);
+			const { data } = await stickerApi.delete(`/stickers/${sticker.id}`);
 
-			if (!response.ok) {
-				console.log(response);
-				return response.msg;
+			if (!data.ok) {
+				console.log(data);
+				return data.msg;
 			}
 
 			removeSticker([sticker]);
@@ -111,25 +82,12 @@ export const useManageStickers = () => {
 	};
 
 	const updateSticker = async (sticker) => {
-		const token = localStorage.getItem("token") ?? "";
 		try {
-			const response = await fetch(
-				`http://localhost:4000/api/stickers/${sticker.id}`,
-				{
-					method: "PUT",
-					body: JSON.stringify(sticker),
-					headers: {
-						"Content-type": "application/json; charset=UTF-8",
-						"x-token": token,
-					},
-				}
-			)
-				.then((response) => response.json())
-				.then((json) => json);
+			const { data } = await stickerApi.put(`/stickers/${sticker.id}`, sticker);
 
-			if (!response.ok) {
-				console.log(response);
-				return response.msg;
+			if (!data.ok) {
+				console.log(data);
+				return data.msg;
 			}
 
 			editSticker(sticker);

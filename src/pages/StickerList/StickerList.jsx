@@ -104,7 +104,7 @@ export const StickerList = () => {
 							</button>
 						</div>
 					</div>
-					<div className=" flex flex-col overflow-y-auto w-full max-h-96 p-3">
+					<div className=" flex flex-col-reverse overflow-y-auto w-full max-h-96 p-3">
 						{stickers.length === 0 ? (
 							<StickerAdvice />
 						) : (
