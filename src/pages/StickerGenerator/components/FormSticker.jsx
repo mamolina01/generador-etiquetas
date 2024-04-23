@@ -75,7 +75,7 @@ export const FormSticker = ({ stickerToEdit }) => {
 							ref={inputRef}
 							id="address"
 							type="text"
-							name="address"
+						ºz	name="address"
 							placeholder="Dirección del destinatario"
 							value={formState.address}
 							onChange={(e) => onInputChange(e)}
