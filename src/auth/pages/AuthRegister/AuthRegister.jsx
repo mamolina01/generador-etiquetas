@@ -31,7 +31,7 @@ export const AuthRegister = () => {
 	};
 	return (
 		<>
-			<div className="w-full mx-auto p-5 mt-5 flex flex-col gap-3 bg-white rounded-md shadow-md shadow-stone-400">
+			<div className="w-full sm:w-9/12 mx-auto p-5 mt-5 flex flex-col gap-3 bg-white rounded-md shadow-md shadow-stone-400">
 				<h3 className="text-center  font-semibold text-indigo-600 text-2xl">
 					Registrate
 				</h3>
